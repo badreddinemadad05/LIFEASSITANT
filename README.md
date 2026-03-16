@@ -13,7 +13,7 @@
 [![Mobile Friendly](https://img.shields.io/badge/Mobile-Responsive-0ea5e9?style=flat)](.)
 
 ---
-
+LIVE TEST : https://badreddinemadad05.github.io/LIFEASSITANT/
 *A single-page web app that replaces 10 different apps — manage your daily life, finances, learning, and productivity in one unified, beautiful interface.*
 
 </div>
