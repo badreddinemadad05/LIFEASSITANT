@@ -1,0 +1,1669 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#020817">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=no">
+  <title>LifeOS — Mon Assistant Personnel</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div id="app" class="app">
+
+  <!-- ════════════════════ SIDEBAR ════════════════════ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon"><img src="IMG-LG.png" alt="LifeOS Logo" class="brand-logo-img"></div>
+      <span class="brand-name">LifeOS</span>
+      <button class="sidebar-collapse-btn" id="sidebarCollapseBtn">
+        <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="nav-item active" data-page="dashboard">
+        <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></span>
+        <span class="nav-label">Tableau de bord</span>
+      </a>
+      <a class="nav-item" data-page="calendar">
+        <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+        <span class="nav-label">Calendrier</span>
+      </a>
+      <a class="nav-item" data-page="tasks">
+        <span class="nav-icon"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></span>
+        <span class="nav-label">Tâches</span>
+      </a>
+      <a class="nav-item" data-page="learning">
+        <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></span>
+        <span class="nav-label">Apprentissage</span>
+      </a>
+      <a class="nav-item" data-page="habits">
+        <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+        <span class="nav-label">Habitudes</span>
+      </a>
+      <a class="nav-item" data-page="goals">
+        <span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
+        <span class="nav-label">Objectifs</span>
+      </a>
+      <a class="nav-item" data-page="notes">
+        <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></span>
+        <span class="nav-label">Notes</span>
+      </a>
+      <a class="nav-item" data-page="finances">
+        <span class="nav-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></span>
+        <span class="nav-label">Finances</span>
+      </a>
+      <a class="nav-item" data-page="languages">
+        <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8l1 12a2 2 0 002 2h8a2 2 0 002-2l1-12"/><path d="M9.5 8v1a2.5 2.5 0 005 0V8"/></svg></span>
+        <span class="nav-label">Langues</span>
+      </a>
+      <a class="nav-item" data-page="pomodoro">
+        <span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+        <span class="nav-label">Pomodoro</span>
+      </a>
+      <a class="nav-item" data-page="stats">
+        <span class="nav-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
+        <span class="nav-label">Statistiques</span>
+      </a>
+      <a class="nav-item" data-page="settings">
+        <span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></span>
+        <span class="nav-label">Paramètres</span>
+      </a>
+      <a class="nav-item" data-page="about">
+        <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+        <span class="nav-label">About Developer</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-card">
+        <div class="user-avatar" id="sidebarAvatar">B</div>
+        <div class="user-info">
+          <span class="user-name" id="sidebarName">Badr</span>
+          <span class="user-status">● Actif</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ════════════════════ MAIN ════════════════════ -->
+  <div class="main-wrapper">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="menu-btn" id="menuBtn">
+          <svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div class="page-title" id="pageTitle">Tableau de bord</div>
+      </div>
+      <div class="topbar-center">
+        <div class="live-clock">
+          <span class="clock-time" id="clockTime">00:00:00</span>
+          <span class="clock-date" id="clockDate">Dimanche 15 Mars 2026</span>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <button class="icon-btn" id="themeToggle" title="Mode sombre">
+          <svg id="themeIcon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        </button>
+        <button class="icon-btn" id="addQuickBtn" title="Ajout rapide">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="content" id="content">
+
+      <!-- ── DASHBOARD ── -->
+      <section class="page" id="page-dashboard">
+        <div class="page-header">
+          <div>
+            <h1 class="page-heading" id="dashGreeting">Bonjour, Badr 👋</h1>
+            <p class="page-subheading" id="dashSubtitle">Voici votre résumé pour aujourd'hui</p>
+          </div>
+          <div class="dash-quick-actions">
+            <button class="btn btn-primary" onclick="App.openQuickAdd('event')">+ Événement</button>
+            <button class="btn btn-secondary" onclick="App.openQuickAdd('task')">+ Tâche</button>
+          </div>
+        </div>
+
+        <div id="dashDailyScore" class="dash-score-card"></div>
+
+        <div class="dashboard-grid">
+          <!-- Today's schedule -->
+          <div class="dash-card dash-schedule">
+            <div class="card-header">
+              <h3>Programme du jour</h3>
+              <span class="card-badge" id="dashEventCount">0 événements</span>
+            </div>
+            <div class="timeline" id="dashTimeline">
+              <div class="empty-state">
+                <div class="empty-icon">📅</div>
+                <p>Aucun événement aujourd'hui</p>
+                <button class="btn btn-sm btn-primary" onclick="App.openQuickAdd('event')">Ajouter un événement</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tasks today -->
+          <div class="dash-card dash-tasks">
+            <div class="card-header">
+              <h3>Tâches du jour</h3>
+              <span class="card-badge" id="dashTaskCount">0 tâches</span>
+            </div>
+            <div id="dashTasksList">
+              <div class="empty-state">
+                <div class="empty-icon">✅</div>
+                <p>Aucune tâche pour aujourd'hui</p>
+                <button class="btn btn-sm btn-primary" onclick="App.openQuickAdd('task')">Ajouter une tâche</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Habits today -->
+          <div class="dash-card dash-habits">
+            <div class="card-header">
+              <h3>Habitudes du jour</h3>
+              <span class="card-badge" id="dashHabitProgress">0 / 0</span>
+            </div>
+            <div id="dashHabitsList">
+              <div class="empty-state">
+                <div class="empty-icon">⭐</div>
+                <p>Aucune habitude définie</p>
+                <button class="btn btn-sm btn-primary" onclick="App.navigate('habits')">Configurer</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stats widgets -->
+          <div class="dash-card dash-stats">
+            <div class="card-header"><h3>Statistiques rapides</h3></div>
+            <div class="stats-grid" id="dashStatsGrid">
+              <div class="stat-widget">
+                <div class="stat-value" id="statTasksDone">0</div>
+                <div class="stat-label">Tâches terminées</div>
+                <div class="stat-sublabel">cette semaine</div>
+              </div>
+              <div class="stat-widget">
+                <div class="stat-value" id="statHabitRate">0%</div>
+                <div class="stat-label">Taux d'habitudes</div>
+                <div class="stat-sublabel">aujourd'hui</div>
+              </div>
+              <div class="stat-widget">
+                <div class="stat-value" id="statStudyTime">0h</div>
+                <div class="stat-label">Temps d'étude</div>
+                <div class="stat-sublabel">cette semaine</div>
+              </div>
+              <div class="stat-widget">
+                <div class="stat-value" id="statGoalsActive">0</div>
+                <div class="stat-label">Objectifs actifs</div>
+                <div class="stat-sublabel">en cours</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Goals preview -->
+          <div class="dash-card dash-goals">
+            <div class="card-header">
+              <h3>Objectifs en cours</h3>
+              <a class="card-link" onclick="App.navigate('goals')">Voir tout →</a>
+            </div>
+            <div id="dashGoalsList">
+              <div class="empty-state">
+                <div class="empty-icon">🎯</div>
+                <p>Aucun objectif défini</p>
+                <button class="btn btn-sm btn-primary" onclick="App.navigate('goals')">Définir un objectif</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Motivational quote -->
+          <div class="dash-card dash-quote">
+            <div class="quote-content">
+              <div class="quote-icon">"</div>
+              <p class="quote-text" id="quoteText">La discipline est le pont entre les objectifs et les réalisations.</p>
+              <span class="quote-author" id="quoteAuthor">— Jim Rohn</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── CALENDAR ── -->
+      <section class="page hidden" id="page-calendar">
+        <div class="page-header">
+          <h1 class="page-heading">Calendrier</h1>
+          <div class="cal-controls">
+            <div class="view-tabs" id="calViewTabs">
+              <button class="view-tab active" data-view="day">Jour</button>
+              <button class="view-tab" data-view="week">Semaine</button>
+              <button class="view-tab" data-view="month">Mois</button>
+            </div>
+            <div class="cal-nav">
+              <button class="icon-btn" id="calPrev"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+              <span class="cal-current-label" id="calCurrentLabel">Aujourd'hui</span>
+              <button class="icon-btn" id="calNext"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+              <button class="btn btn-sm btn-outline" id="calTodayBtn">Aujourd'hui</button>
+            </div>
+            <button class="btn btn-primary" onclick="App.openQuickAdd('event')">+ Événement</button>
+          </div>
+        </div>
+        <div class="calendar-container" id="calendarContainer"></div>
+      </section>
+
+      <!-- ── TASKS ── -->
+      <section class="page hidden" id="page-tasks">
+        <div class="page-header">
+          <h1 class="page-heading">Tâches</h1>
+          <button class="btn btn-primary" onclick="TaskModule.openModal()">+ Nouvelle tâche</button>
+        </div>
+        <div class="tasks-layout">
+          <div class="tasks-sidebar">
+            <div class="filter-group">
+              <p class="filter-label">Vue</p>
+              <button class="filter-item active" data-filter="all">Toutes <span class="count" id="countAll">0</span></button>
+              <button class="filter-item" data-filter="today">Aujourd'hui <span class="count" id="countToday">0</span></button>
+              <button class="filter-item" data-filter="upcoming">À venir <span class="count" id="countUpcoming">0</span></button>
+              <button class="filter-item" data-filter="overdue">En retard <span class="count" id="countOverdue">0</span></button>
+              <button class="filter-item" data-filter="completed">Terminées <span class="count" id="countCompleted">0</span></button>
+            </div>
+            <div class="filter-group">
+              <p class="filter-label">Priorité</p>
+              <button class="filter-item" data-filter="high">🔴 Haute</button>
+              <button class="filter-item" data-filter="medium">🟡 Moyenne</button>
+              <button class="filter-item" data-filter="low">🟢 Basse</button>
+            </div>
+          </div>
+          <div class="tasks-main">
+            <div class="tasks-search">
+              <input type="text" id="taskSearch" placeholder="Rechercher une tâche..." class="search-input">
+            </div>
+            <div id="tasksList" class="tasks-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── LEARNING ── -->
+      <section class="page hidden" id="page-learning">
+        <div class="page-header">
+          <h1 class="page-heading">Apprentissage</h1>
+          <button class="btn btn-primary" onclick="LearningModule.openSubjectModal()">+ Nouvelle matière</button>
+        </div>
+        <div class="learning-global-stats" id="learningGlobalStats"></div>
+        <div class="learning-toolbar">
+          <div class="search-wrap">
+            <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <input type="text" id="learningSearch" class="form-input search-input" placeholder="Rechercher une matière...">
+          </div>
+          <select class="form-input" id="learningFilter" style="width:auto">
+            <option value="all">Toutes les matières</option>
+            <option value="inprogress">En cours</option>
+            <option value="completed">Terminées (100%)</option>
+            <option value="notstarted">Non commencées</option>
+          </select>
+          <select class="form-input" id="learningSort" style="width:auto">
+            <option value="name">Trier par nom</option>
+            <option value="progress">Trier par progression</option>
+            <option value="recent">Plus récentes</option>
+          </select>
+        </div>
+        <div id="learningContent">
+          <div id="subjectsList" class="subjects-grid"></div>
+        </div>
+      </section>
+
+      <!-- ── HABITS ── -->
+      <section class="page hidden" id="page-habits">
+        <div class="page-header">
+          <h1 class="page-heading">Habitudes</h1>
+          <button class="btn btn-primary" onclick="HabitModule.openModal()">+ Nouvelle habitude</button>
+        </div>
+        <div class="habits-week-nav">
+          <button class="icon-btn" id="habitWeekPrev"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+          <span id="habitWeekLabel">Cette semaine</span>
+          <button class="icon-btn" id="habitWeekNext"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+        </div>
+        <div id="habitsTable" class="habits-table-wrap"></div>
+      </section>
+
+      <!-- ── GOALS ── -->
+      <section class="page hidden" id="page-goals">
+        <div class="page-header">
+          <h1 class="page-heading">Objectifs</h1>
+          <div class="goals-filters">
+            <button class="filter-pill active" data-gfilter="all">Tous</button>
+            <button class="filter-pill" data-gfilter="active">Actifs</button>
+            <button class="filter-pill" data-gfilter="completed">Terminés</button>
+          </div>
+          <button class="btn btn-primary" onclick="GoalModule.openModal()">+ Nouvel objectif</button>
+        </div>
+        <div id="goalsList" class="goals-grid"></div>
+      </section>
+
+      <!-- ── NOTES ── -->
+      <section class="page hidden" id="page-notes">
+        <div class="page-header">
+          <h1 class="page-heading">Notes & Journal</h1>
+          <div class="notes-tabs" id="notesTabs">
+            <button class="notes-tab active" data-ntab="notes">Notes</button>
+            <button class="notes-tab" data-ntab="journal">Journal</button>
+          </div>
+          <button class="btn btn-primary" id="addNoteBtn">+ Nouvelle note</button>
+        </div>
+        <div id="notesContent" class="notes-layout">
+          <div class="notes-list-panel" id="notesListPanel"></div>
+          <div class="note-editor-panel" id="noteEditorPanel">
+            <div class="empty-state large">
+              <div class="empty-icon">📝</div>
+              <p>Sélectionnez une note ou créez-en une nouvelle</p>
+            </div>
+          </div>
+        </div>
+        <div id="journalContent" class="journal-layout hidden">
+          <div class="journal-sidebar">
+            <div class="journal-cal" id="journalCal"></div>
+          </div>
+          <div class="journal-editor" id="journalEditor">
+            <div class="empty-state large">
+              <div class="empty-icon">📔</div>
+              <p>Sélectionnez une date pour écrire dans votre journal</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── POMODORO ── -->
+      <section class="page hidden" id="page-pomodoro">
+        <div class="page-header">
+          <div>
+            <h1 class="page-heading">Pomodoro Focus</h1>
+            <p class="page-subheading" id="pomoSubtitle">Organisez votre temps avec précision</p>
+          </div>
+          <div id="pomoHeaderStats" class="pomo-header-stats">
+            <div class="pomo-header-stat"><span id="hStatDone">0</span><small>Terminés</small></div>
+            <div class="pomo-header-stat"><span id="hStatGoal">8</span><small>Objectif</small></div>
+            <div class="pomo-header-stat"><span id="hStatTime">0h 0m</span><small>Concentré</small></div>
+          </div>
+          <button class="btn btn-primary pomo-launch-btn" id="pomoLaunchBtn" onclick="PomodoroModule.launchFocus()">
+            <svg viewBox="0 0 24 24" style="width:16px;height:16px"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Lancer le Focus
+          </button>
+        </div>
+
+        <div class="pomodoro-layout">
+
+          <!-- LEFT PANEL -->
+          <div class="pomo-left">
+
+            <!-- Mode selector -->
+            <div class="card pomo-card">
+              <div class="card-header"><h3>Mode de concentration</h3></div>
+              <div class="pomo-modes-grid" id="pomoModesGrid">
+                <button class="pomo-mode-btn active" data-mode="classic">
+                  <div class="pomo-mode-emoji">🍅</div>
+                  <div class="pomo-mode-name">Classique</div>
+                  <div class="pomo-mode-desc">25 min + 5 min</div>
+                </button>
+                <button class="pomo-mode-btn" data-mode="intermediate">
+                  <div class="pomo-mode-emoji">⚡</div>
+                  <div class="pomo-mode-name">Intermédiaire</div>
+                  <div class="pomo-mode-desc">50 min + 10 min</div>
+                </button>
+                <button class="pomo-mode-btn" data-mode="intensive">
+                  <div class="pomo-mode-emoji">🔥</div>
+                  <div class="pomo-mode-name">Intensif</div>
+                  <div class="pomo-mode-desc">60 min + 10 min</div>
+                </button>
+                <button class="pomo-mode-btn" data-mode="custom">
+                  <div class="pomo-mode-emoji">⚙️</div>
+                  <div class="pomo-mode-name">Personnalisé</div>
+                  <div class="pomo-mode-desc">Libre</div>
+                </button>
+              </div>
+            </div>
+
+            <!-- Custom settings -->
+            <div class="card pomo-card" id="pomoCustomSettings" style="display:none">
+              <div class="card-header"><h3>Réglages personnalisés</h3></div>
+              <div class="pomo-custom-grid">
+                <div class="form-row">
+                  <label>Concentration (min)</label>
+                  <input type="number" id="customWork" class="form-input" value="45" min="5" max="120">
+                </div>
+                <div class="form-row">
+                  <label>Pause courte (min)</label>
+                  <input type="number" id="customShort" class="form-input" value="10" min="3" max="30">
+                </div>
+                <div class="form-row">
+                  <label>Grande pause (min)</label>
+                  <input type="number" id="customLong" class="form-input" value="20" min="10" max="60">
+                </div>
+                <div class="form-row">
+                  <label>Cycles avant grande pause</label>
+                  <input type="number" id="customCycles" class="form-input" value="4" min="2" max="8">
+                </div>
+              </div>
+            </div>
+
+            <!-- Objectif journalier -->
+            <div class="card pomo-card">
+              <div class="card-header"><h3>Objectif du jour</h3></div>
+              <div class="pomo-goal-section">
+                <div class="pomo-goal-dots" id="pomoGoalDots"></div>
+                <div class="pomo-goal-controls">
+                  <label style="font-size:13px;color:var(--text-secondary)">Objectif :</label>
+                  <button class="pomo-goal-btn" onclick="PomodoroModule.adjustGoal(-1)">−</button>
+                  <span id="pomoGoalNum" class="pomo-goal-number">8</span>
+                  <span style="font-size:13px;color:var(--text-secondary)">Pomodoro</span>
+                  <button class="pomo-goal-btn" onclick="PomodoroModule.adjustGoal(1)">+</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Lier à une matière / tâche -->
+            <div class="card pomo-card">
+              <div class="card-header"><h3>Lier cette session à</h3></div>
+              <div class="form-row">
+                <label>Type</label>
+                <select id="pomoLinkType" class="form-input" onchange="PomodoroModule.updateLinkOptions()">
+                  <option value="">Aucun</option>
+                  <option value="subject">Matière</option>
+                  <option value="task">Tâche</option>
+                </select>
+              </div>
+              <div class="form-row" id="pomoLinkSelect" style="display:none">
+                <label>Sélectionner</label>
+                <select id="pomoLinkId" class="form-input"></select>
+              </div>
+            </div>
+
+            <!-- Pauses fixes -->
+            <div class="card pomo-card">
+              <div class="card-header">
+                <h3>Pauses fixes de la journée</h3>
+                <button class="btn btn-sm btn-outline" onclick="PomodoroModule.addFixedBreak()">+ Ajouter</button>
+              </div>
+              <div id="pomoFixedBreaks" class="pomo-breaks-list"></div>
+            </div>
+
+          </div><!-- end pomo-left -->
+
+          <!-- RIGHT PANEL -->
+          <div class="pomo-right">
+
+            <!-- Mini timer preview -->
+            <div class="card pomo-card pomo-preview-card">
+              <div class="card-header"><h3>Aperçu de la session</h3></div>
+              <div class="pomo-preview">
+                <div class="pomo-mini-ring">
+                  <svg viewBox="0 0 120 120" class="pomo-mini-svg">
+                    <circle class="mini-ring-bg" cx="60" cy="60" r="50"/>
+                    <circle class="mini-ring-progress" id="miniRingProgress" cx="60" cy="60" r="50"/>
+                  </svg>
+                  <div class="pomo-mini-time" id="pomoMiniTime">25:00</div>
+                </div>
+                <div class="pomo-preview-info">
+                  <div class="pomo-preview-phase" id="pomoPreviewPhase">Concentration</div>
+                  <div class="pomo-preview-cycle" id="pomoPreviewCycle">Cycle 1 / 4</div>
+                  <div class="pomo-mini-controls">
+                    <button class="btn btn-sm btn-secondary" onclick="PomodoroModule.resetTimer()">↺</button>
+                    <button class="btn btn-primary" id="pomoMiniPlayBtn" onclick="PomodoroModule.toggleTimer()">▶ Démarrer</button>
+                    <button class="btn btn-sm btn-secondary" onclick="PomodoroModule.skipPhase()">⏭</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Daily timeline -->
+            <div class="card pomo-card">
+              <div class="card-header">
+                <h3>Timeline de la journée</h3>
+                <div style="display:flex;gap:8px;align-items:center">
+                  <input type="time" id="pomoStartTime" class="form-input" style="width:90px;padding:4px 8px;font-size:12px" value="08:00">
+                  <span style="font-size:12px;color:var(--text-secondary)">→</span>
+                  <input type="time" id="pomoEndTime" class="form-input" style="width:90px;padding:4px 8px;font-size:12px" value="22:00">
+                  <button class="btn btn-sm btn-outline" onclick="PomodoroModule.buildTimeline()">Générer</button>
+                </div>
+              </div>
+              <div id="pomoTimeline" class="pomo-timeline"></div>
+              <div class="pomo-timeline-legend">
+                <span class="tl-legend-item"><span class="tl-dot tl-dot-work"></span>Concentration</span>
+                <span class="tl-legend-item"><span class="tl-dot tl-dot-short"></span>Pause courte</span>
+                <span class="tl-legend-item"><span class="tl-dot tl-dot-long"></span>Grande pause</span>
+                <span class="tl-legend-item"><span class="tl-dot tl-dot-fixed"></span>Pause fixe</span>
+              </div>
+            </div>
+
+            <!-- Today's sessions history -->
+            <div class="card pomo-card">
+              <div class="card-header">
+                <h3>Sessions d'aujourd'hui</h3>
+                <span class="card-badge" id="pomoSessionBadge">0 sessions</span>
+              </div>
+              <div id="pomoSessionHistory" class="pomo-session-history">
+                <div class="empty-state">
+                  <div class="empty-icon">🍅</div>
+                  <p>Aucune session aujourd'hui. Lancez votre premier Pomodoro !</p>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- end pomo-right -->
+        </div><!-- end pomodoro-layout -->
+      </section>
+
+      <!-- ── STATS ── -->
+      <section class="page hidden" id="page-stats">
+        <div class="page-header">
+          <h1 class="page-heading">Statistiques</h1>
+          <div class="stats-period-tabs" id="statsPeriodTabs">
+            <button class="period-tab active" data-period="week">Cette semaine</button>
+            <button class="period-tab" data-period="month">Ce mois</button>
+          </div>
+        </div>
+        <div class="stats-grid-layout">
+          <div class="stat-card">
+            <h3>Complétion des tâches</h3>
+            <canvas id="chartTasksWeek" height="200"></canvas>
+          </div>
+          <div class="stat-card">
+            <h3>Répartition du temps</h3>
+            <canvas id="chartTimeDistrib" height="200"></canvas>
+          </div>
+          <div class="stat-card">
+            <h3>Suivi des habitudes</h3>
+            <canvas id="chartHabits" height="200"></canvas>
+          </div>
+          <div class="stat-card">
+            <h3>Progression apprentissage</h3>
+            <canvas id="chartLearning" height="200"></canvas>
+          </div>
+        </div>
+        <div class="stats-summary" id="statsSummary"></div>
+        <div id="statsHistory" class="history-section"></div>
+      </section>
+
+      <!-- ── FINANCES ── -->
+      <section class="page hidden" id="page-finances">
+        <div class="page-header">
+          <div class="fin-month-nav">
+            <button class="icon-btn" onclick="FinanceModule.navigateMonth(-1)">
+              <svg viewBox="0 0 24 24" style="width:18px;height:18px"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <span class="fin-month-label" id="finMonthLabel">Mars 2026</span>
+            <button class="icon-btn" onclick="FinanceModule.navigateMonth(1)">
+              <svg viewBox="0 0 24 24" style="width:18px;height:18px"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </div>
+          <button class="btn btn-primary" onclick="FinanceModule.openModal()">+ Transaction</button>
+        </div>
+
+        <!-- Summary cards -->
+        <div class="fin-summary-grid" id="finSummaryGrid"></div>
+
+        <!-- Progress bar -->
+        <div class="fin-budget-card" id="finBudgetCard"></div>
+
+        <!-- Chart + filters row -->
+        <div class="fin-main-grid">
+          <div class="fin-transactions-col">
+            <!-- Filters -->
+            <div class="fin-filters" id="finFilters">
+              <select class="form-input fin-filter-select" id="finFilterType" onchange="FinanceModule.renderTransactions()">
+                <option value="all">Tous les types</option>
+                <option value="income">Revenus</option>
+                <option value="expense">Dépenses</option>
+              </select>
+              <select class="form-input fin-filter-select" id="finFilterCat" onchange="FinanceModule.renderTransactions()">
+                <option value="all">Toutes les catégories</option>
+                <option value="salary">💼 Job étudiant</option>
+                <option value="income_other">💰 Autre revenu</option>
+                <option value="groceries">🛒 Courses</option>
+                <option value="rent">🏠 Loyer</option>
+                <option value="leisure">🎮 Loisirs</option>
+                <option value="transport">🚌 Transport</option>
+                <option value="personal">👕 Achat personnel</option>
+                <option value="other">📦 Autre dépense</option>
+              </select>
+            </div>
+            <!-- Transactions list -->
+            <div id="finTransactionsList"></div>
+          </div>
+          <div class="fin-chart-col">
+            <div class="fin-chart-card">
+              <h3 class="fin-chart-title">Dépenses par catégorie</h3>
+              <div id="finChartWrap">
+                <canvas id="finChartCanvas" height="220"></canvas>
+              </div>
+              <div id="finCatBreakdown"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── LANGUAGES ── -->
+      <section class="page hidden" id="page-languages">
+        <div class="page-header">
+          <div>
+            <h1 class="page-heading">Langues</h1>
+            <p class="page-subheading">Apprentissage de phrases quotidiennes</p>
+          </div>
+          <button class="btn btn-primary" onclick="LangModule.openModal()">+ Ajouter une phrase</button>
+        </div>
+
+        <!-- Language tabs -->
+        <div class="lang-tabs">
+          <button class="lang-tab active" data-lang="dutch">🇧🇪 Néerlandais</button>
+          <button class="lang-tab" data-lang="english">🇬🇧 Anglais</button>
+        </div>
+
+        <!-- Stats cards -->
+        <div class="lang-stats-grid" id="langStatsGrid"></div>
+
+        <!-- Day progress card -->
+        <div class="lang-day-card" id="langDayCard"></div>
+
+        <!-- Filter tabs -->
+        <div class="lang-filter-row">
+          <div class="lang-filter-tabs">
+            <button class="lang-filter active" data-filter="today">📅 Aujourd'hui</button>
+            <button class="lang-filter" data-filter="review">⚠️ À revoir</button>
+            <button class="lang-filter" data-filter="all">Toutes</button>
+            <button class="lang-filter" data-filter="learned">✅ Apprises</button>
+          </div>
+          <div class="lang-search-wrap hidden" id="langSearchWrap">
+            <input type="text" id="langSearch" class="form-input" placeholder="🔍 Rechercher une phrase...">
+          </div>
+        </div>
+
+        <!-- Phrases list -->
+        <div id="langPhrasesList"></div>
+      </section>
+
+      <!-- ── ABOUT DEVELOPER ── -->
+      <section class="page hidden" id="page-about">
+
+        <!-- Hero card -->
+        <div class="about-hero">
+          <div class="about-avatar-wrap">
+            <div class="about-avatar">
+              <img src="IMG-DEV.jpg" alt="Badreddine Madad" class="about-avatar-img">
+            </div>
+            <div class="about-avatar-ring"></div>
+          </div>
+          <div class="about-hero-info">
+            <h1 class="about-name">Badreddine Madad</h1>
+            <p class="about-title">BSc Computer Science Student &nbsp;·&nbsp; University of Namur</p>
+            <p class="about-desc">I am a computer science student passionate about building practical tools and software systems. I enjoy developing applications that improve productivity, learning, and personal organization.<br><br>This website (<strong>LifeOS</strong>) is a personal project designed to manage daily life, productivity, finances, and learning in one unified system.</p>
+            <div class="about-meta-row">
+              <span class="about-meta-badge"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> Namur, Belgium</span>
+              <span class="about-meta-badge available"><span class="about-pulse"></span> Open to opportunities</span>
+            </div>
+          </div>
+          <div class="about-social-col">
+            <a class="about-social-btn" href="mailto:badreddine.madad@gmail.com" title="Email">
+              <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <span>Email</span>
+            </a>
+            <a class="about-social-btn" href="https://www.linkedin.com/in/badreddine-madad-b18a81299/" target="_blank" rel="noopener" title="LinkedIn">
+              <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              <span>LinkedIn</span>
+            </a>
+            <a class="about-social-btn" href="https://github.com/badreddinemadad05" target="_blank" rel="noopener" title="GitHub">
+              <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+              <span>GitHub</span>
+            </a>
+            <a class="about-social-btn" href="https://gitlab.com/badreddinemadad05" target="_blank" rel="noopener" title="GitLab">
+              <svg viewBox="0 0 24 24"><path d="M22.65 14.39L12 22.13 1.35 14.39a.84.84 0 01-.3-.94l1.22-3.78 2.44-7.51A.42.42 0 014.82 2a.43.43 0 01.58 0 .42.42 0 01.11.18l2.44 7.49h8.1l2.44-7.49a.42.42 0 01.11-.18.43.43 0 01.58 0 .42.42 0 01.11.18l2.44 7.51L22.95 13.45a.84.84 0 01-.3.94z"/></svg>
+              <span>GitLab</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Body grid -->
+        <div class="about-body-grid">
+
+          <!-- LEFT COLUMN -->
+          <div class="about-left-col">
+
+            <!-- Education -->
+            <div class="about-section-card">
+              <div class="about-section-header">
+                <div class="about-section-icon edu">🎓</div>
+                <h2 class="about-section-title">Education</h2>
+              </div>
+              <div class="about-edu-item">
+                <div class="about-edu-degree">Bachelor of Science in Computer Science</div>
+                <div class="about-edu-sub">180 ECTS</div>
+                <div class="about-edu-school">
+                  <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                  University of Namur
+                </div>
+                <div class="about-edu-period">
+                  <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  2023 – Expected June 2027
+                </div>
+                <div class="about-edu-courses">
+                  <div class="about-edu-courses-label">Relevant coursework</div>
+                  <div class="about-badges-wrap">
+                    <span class="about-badge course">Python</span>
+                    <span class="about-badge course">Java</span>
+                    <span class="about-badge course">C</span>
+                    <span class="about-badge course">Algorithms & Data Structures</span>
+                    <span class="about-badge course">OOP</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Work experience -->
+            <div class="about-section-card">
+              <div class="about-section-header">
+                <div class="about-section-icon work">💼</div>
+                <h2 class="about-section-title">Work Experience</h2>
+              </div>
+              <div class="about-work-item">
+                <div class="about-work-header">
+                  <div>
+                    <div class="about-work-role">Student Crew Member</div>
+                    <div class="about-work-company">Quick — Brussels, Belgium</div>
+                  </div>
+                  <div class="about-work-period">2023 – Present</div>
+                </div>
+                <ul class="about-work-list">
+                  <li>Provided customer service in a fast-paced environment</li>
+                  <li>Worked effectively in a team under time pressure</li>
+                  <li>Developed strong communication and time management skills</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Languages spoken -->
+            <div class="about-section-card">
+              <div class="about-section-header">
+                <div class="about-section-icon lang">🌍</div>
+                <h2 class="about-section-title">Languages</h2>
+              </div>
+              <div class="about-langs-list">
+                <div class="about-lang-row">
+                  <span class="about-lang-flag">🇸🇦</span>
+                  <span class="about-lang-name">Arabic</span>
+                  <div class="about-lang-bar-wrap"><div class="about-lang-bar" style="width:100%"></div></div>
+                  <span class="about-lang-level native">Native</span>
+                </div>
+                <div class="about-lang-row">
+                  <span class="about-lang-flag">🇫🇷</span>
+                  <span class="about-lang-name">French</span>
+                  <div class="about-lang-bar-wrap"><div class="about-lang-bar" style="width:85%"></div></div>
+                  <span class="about-lang-level advanced">Advanced</span>
+                </div>
+                <div class="about-lang-row">
+                  <span class="about-lang-flag">🇬🇧</span>
+                  <span class="about-lang-name">English</span>
+                  <div class="about-lang-bar-wrap"><div class="about-lang-bar" style="width:68%"></div></div>
+                  <span class="about-lang-level intermediate">B2</span>
+                </div>
+                <div class="about-lang-row">
+                  <span class="about-lang-flag">🇳🇱</span>
+                  <span class="about-lang-name">Dutch</span>
+                  <div class="about-lang-bar-wrap"><div class="about-lang-bar" style="width:20%"></div></div>
+                  <span class="about-lang-level beginner">Beginner</span>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /left -->
+
+          <!-- RIGHT COLUMN -->
+          <div class="about-right-col">
+
+            <!-- Technical Skills -->
+            <div class="about-section-card">
+              <div class="about-section-header">
+                <div class="about-section-icon skills">⚡</div>
+                <h2 class="about-section-title">Technical Skills</h2>
+              </div>
+              <div class="about-skills-group">
+                <div class="about-skills-label">Programming Languages</div>
+                <div class="about-badges-wrap">
+                  <span class="about-badge lang-python">Python</span>
+                  <span class="about-badge lang-java">Java</span>
+                  <span class="about-badge lang-c">C</span>
+                  <span class="about-badge lang-rust">Rust</span>
+                </div>
+              </div>
+              <div class="about-skills-group">
+                <div class="about-skills-label">Computer Science</div>
+                <div class="about-badges-wrap">
+                  <span class="about-badge cs">Algorithms</span>
+                  <span class="about-badge cs">Data Structures</span>
+                  <span class="about-badge cs">OOP</span>
+                </div>
+              </div>
+              <div class="about-skills-group">
+                <div class="about-skills-label">Web Development</div>
+                <div class="about-badges-wrap">
+                  <span class="about-badge web">HTML5</span>
+                  <span class="about-badge web">CSS3</span>
+                  <span class="about-badge web">JavaScript</span>
+                </div>
+              </div>
+              <div class="about-skills-group">
+                <div class="about-skills-label">Soft Skills</div>
+                <div class="about-badges-wrap">
+                  <span class="about-badge soft">Hard-working</span>
+                  <span class="about-badge soft">Eye for detail</span>
+                  <span class="about-badge soft">Motivator</span>
+                  <span class="about-badge soft">Leader</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Projects -->
+            <div class="about-section-card">
+              <div class="about-section-header">
+                <div class="about-section-icon proj">🚀</div>
+                <h2 class="about-section-title">Projects</h2>
+              </div>
+              <div class="about-projects-list">
+
+                <div class="about-project-card">
+                  <div class="about-project-header">
+                    <div class="about-project-icon">🛒</div>
+                    <div>
+                      <div class="about-project-title">Full-Stack Video Game E-Commerce</div>
+                      <div class="about-project-tags">
+                        <span class="about-ptag">Web</span><span class="about-ptag">Full-Stack</span>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="about-project-desc">Developed a full-stack web application to sell video games. Implemented both front-end and back-end features for browsing products and purchasing games.</p>
+                </div>
+
+                <div class="about-project-card">
+                  <div class="about-project-header">
+                    <div class="about-project-icon">🐑</div>
+                    <div>
+                      <div class="about-project-title">AI Sheep Battle Game</div>
+                      <div class="about-project-tags">
+                        <span class="about-ptag">Python</span><span class="about-ptag">AI</span><span class="about-ptag">OOP</span>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="about-project-desc">Team-based battle simulation with autonomous sheep agents. Applied object-oriented programming principles.</p>
+                </div>
+
+                <div class="about-project-card">
+                  <div class="about-project-header">
+                    <div class="about-project-icon">🚇</div>
+                    <div>
+                      <div class="about-project-title">Smart Vehicle Transport Simulation</div>
+                      <div class="about-project-tags">
+                        <span class="about-ptag">Java</span><span class="about-ptag">Processing</span><span class="about-ptag">Simulation</span>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="about-project-desc">Simulated an automated vehicle elevator and underground metro transport system.</p>
+                </div>
+
+                <div class="about-project-card">
+                  <div class="about-project-header">
+                    <div class="about-project-icon">🧠</div>
+                    <div>
+                      <div class="about-project-title">Algorithmic Problem Solving</div>
+                      <div class="about-project-tags">
+                        <span class="about-ptag">Java</span><span class="about-ptag">Algorithms</span>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="about-project-desc">Implemented divide &amp; conquer, greedy, generate-and-test, and dynamic programming algorithms.</p>
+                </div>
+
+                <div class="about-project-card about-project-featured">
+                  <div class="about-project-header">
+                    <div class="about-project-icon">🌐</div>
+                    <div>
+                      <div class="about-project-title">LifeOS — This Website</div>
+                      <div class="about-project-tags">
+                        <span class="about-ptag">HTML</span><span class="about-ptag">CSS</span><span class="about-ptag">JavaScript</span><span class="about-ptag">Personal Project</span>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="about-project-desc">Personal productivity dashboard with tasks, habits, finances, language learning, Pomodoro timer, statistics, and more — built entirely in vanilla JS with localStorage persistence.</p>
+                </div>
+
+              </div>
+            </div>
+
+          </div><!-- /right -->
+        </div><!-- /body-grid -->
+
+      </section>
+
+      <!-- ── SETTINGS ── -->
+      <section class="page hidden" id="page-settings">
+        <div class="page-header">
+          <h1 class="page-heading">Paramètres</h1>
+        </div>
+        <div class="settings-layout">
+          <div class="settings-group">
+            <h3 class="settings-group-title">Profil</h3>
+            <div class="setting-row">
+              <label>Votre prénom</label>
+              <input type="text" id="setName" class="setting-input" placeholder="Badr">
+            </div>
+            <div class="setting-row">
+              <label>Initiale avatar</label>
+              <input type="text" id="setAvatar" class="setting-input" maxlength="2" placeholder="B">
+            </div>
+          </div>
+          <div class="settings-group">
+            <h3 class="settings-group-title">Apparence</h3>
+            <div class="setting-row">
+              <label>Thème</label>
+              <div class="toggle-row">
+                <span>Clair</span>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="setDarkMode">
+                  <span class="toggle-slider"></span>
+                </label>
+                <span>Sombre</span>
+              </div>
+            </div>
+            <div class="setting-row">
+              <label>Couleur principale</label>
+              <div class="color-swatches" id="colorSwatches">
+                <button class="swatch active" data-color="#6366f1" style="background:#6366f1" title="Indigo"></button>
+                <button class="swatch" data-color="#8b5cf6" style="background:#8b5cf6" title="Violet"></button>
+                <button class="swatch" data-color="#ec4899" style="background:#ec4899" title="Rose"></button>
+                <button class="swatch" data-color="#f59e0b" style="background:#f59e0b" title="Ambre"></button>
+                <button class="swatch" data-color="#10b981" style="background:#10b981" title="Émeraude"></button>
+                <button class="swatch" data-color="#0ea5e9" style="background:#0ea5e9" title="Bleu ciel"></button>
+                <button class="swatch" data-color="#ef4444" style="background:#ef4444" title="Rouge"></button>
+              </div>
+            </div>
+          </div>
+          <div class="settings-group">
+            <h3 class="settings-group-title">Calendrier</h3>
+            <div class="setting-row">
+              <label>Heure de début (journée)</label>
+              <input type="number" id="setStartHour" class="setting-input small" min="0" max="12" value="5">
+            </div>
+            <div class="setting-row">
+              <label>Heure de fin (journée)</label>
+              <input type="number" id="setEndHour" class="setting-input small" min="18" max="24" value="23">
+            </div>
+          </div>
+          <div class="settings-group">
+            <h3 class="settings-group-title">Données</h3>
+            <div class="setting-row">
+              <label>Exporter les données</label>
+              <button class="btn btn-secondary" id="exportDataBtn">Exporter JSON</button>
+            </div>
+            <div class="setting-row">
+              <label>Importer des données</label>
+              <label class="btn btn-secondary" for="importFile">Importer JSON</label>
+              <input type="file" id="importFile" accept=".json" hidden>
+            </div>
+            <div class="setting-row danger-zone">
+              <label>Réinitialiser tout</label>
+              <button class="btn btn-danger" id="resetDataBtn">Tout effacer</button>
+            </div>
+          </div>
+          <div class="settings-actions">
+            <button class="btn btn-primary btn-lg" id="saveSettingsBtn">Enregistrer les paramètres</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div><!-- end main-wrapper -->
+</div><!-- end app -->
+
+<!-- ════════════════════ MODALS ════════════════════ -->
+  <!-- Language Phrase Modal -->
+  <!-- Finance Transaction Modal -->
+  <div id="finModal" class="modal hidden">
+    <div class="modal-header">
+      <h3 class="modal-title" id="finModalTitle">Nouvelle transaction</h3>
+      <button class="modal-close" onclick="Modal.close('finModal')">×</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="finTxId">
+      <div class="form-row two-col">
+        <div>
+          <label class="form-label">Type *</label>
+          <select id="finTxType" class="form-input" onchange="FinanceModule.onTypeChange()">
+            <option value="expense">💸 Dépense</option>
+            <option value="income">💰 Revenu</option>
+          </select>
+        </div>
+        <div>
+          <label class="form-label">Montant (€) *</label>
+          <input type="number" id="finTxAmount" class="form-input" placeholder="0.00" min="0" step="0.01">
+        </div>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Catégorie *</label>
+        <select id="finTxCat" class="form-input">
+          <option value="groceries">🛒 Courses</option>
+          <option value="rent">🏠 Loyer</option>
+          <option value="leisure">🎮 Loisirs</option>
+          <option value="transport">🚌 Transport</option>
+          <option value="personal">👕 Achat personnel</option>
+          <option value="other">📦 Autre dépense</option>
+        </select>
+      </div>
+      <div class="form-row two-col">
+        <div>
+          <label class="form-label">Date *</label>
+          <input type="date" id="finTxDate" class="form-input">
+        </div>
+        <div>
+          <label class="form-label">Description (optionnel)</label>
+          <input type="text" id="finTxDesc" class="form-input" placeholder="Ex: Supermarché Carrefour">
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger hidden" id="finDeleteBtn">Supprimer</button>
+      <div style="display:flex;gap:8px;margin-left:auto">
+        <button class="btn btn-secondary" onclick="Modal.close('finModal')">Annuler</button>
+        <button class="btn btn-primary" id="finSaveBtn">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+  <div id="langModal" class="modal hidden">
+    <div class="modal-header">
+      <h3 class="modal-title" id="langModalTitle">Nouvelle phrase</h3>
+      <button class="modal-close" onclick="Modal.close('langModal')">×</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="langPhraseId">
+      <div class="form-row">
+        <label class="form-label">Phrase (langue cible) *</label>
+        <input type="text" id="langPhraseText" class="form-input" placeholder="Ex: Ik wil Nederlands leren">
+      </div>
+      <div class="form-row">
+        <label class="form-label">Traduction française *</label>
+        <input type="text" id="langPhraseTranslation" class="form-input" placeholder="Ex: Je veux apprendre le néerlandais">
+      </div>
+      <div class="form-row">
+        <label class="form-label">Note (optionnel)</label>
+        <input type="text" id="langPhraseNotes" class="form-input" placeholder="Prononciation, contexte, exemple...">
+      </div>
+      <div class="form-row two-col">
+        <div>
+          <label class="form-label">Langue</label>
+          <select id="langPhraseLang" class="form-input">
+            <option value="dutch">🇧🇪 Néerlandais</option>
+            <option value="english">🇬🇧 Anglais</option>
+          </select>
+        </div>
+        <div>
+          <label class="form-label">Statut</label>
+          <select id="langPhraseStatus" class="form-input">
+            <option value="new">Nouveau</option>
+            <option value="learning">En cours</option>
+            <option value="learned">Appris ✅</option>
+            <option value="review">À revoir ⚠️</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger hidden" id="langDeleteBtn">Supprimer</button>
+      <div style="display:flex;gap:8px;margin-left:auto">
+        <button class="btn btn-secondary" onclick="Modal.close('langModal')">Annuler</button>
+        <button class="btn btn-primary" id="langSaveBtn">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+<div class="modal-backdrop hidden" id="modalBackdrop"></div>
+
+<!-- Event Modal -->
+<div class="modal hidden" id="eventModal">
+  <div class="modal-header">
+    <h2 id="eventModalTitle">Nouvel événement</h2>
+    <button class="modal-close" onclick="Modal.close('eventModal')">×</button>
+  </div>
+  <div class="modal-body">
+    <input type="hidden" id="eventId">
+    <div class="form-row">
+      <label>Titre *</label>
+      <input type="text" id="eventTitle" class="form-input" placeholder="Titre de l'événement">
+    </div>
+    <div class="form-row two-col">
+      <div>
+        <label>Date *</label>
+        <input type="date" id="eventDate" class="form-input">
+      </div>
+      <div>
+        <label>Catégorie</label>
+        <select id="eventCategory" class="form-input">
+          <option value="work">Travail</option>
+          <option value="study">Étude</option>
+          <option value="sport">Sport</option>
+          <option value="personal">Personnel</option>
+          <option value="health">Santé</option>
+          <option value="social">Social</option>
+          <option value="other">Autre</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row two-col">
+      <div>
+        <label>Heure début</label>
+        <input type="time" id="eventStart" class="form-input">
+      </div>
+      <div>
+        <label>Heure fin</label>
+        <input type="time" id="eventEnd" class="form-input">
+      </div>
+    </div>
+    <div class="form-row two-col">
+      <div>
+        <label>Couleur</label>
+        <input type="color" id="eventColor" class="form-input color-input" value="#6366f1">
+      </div>
+      <div>
+        <label>Priorité</label>
+        <select id="eventPriority" class="form-input">
+          <option value="low">Basse</option>
+          <option value="medium" selected>Moyenne</option>
+          <option value="high">Haute</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label>Lieu</label>
+      <input type="text" id="eventLocation" class="form-input" placeholder="Lieu (optionnel)">
+    </div>
+    <div class="form-row">
+      <label>Description</label>
+      <textarea id="eventDesc" class="form-textarea" rows="3" placeholder="Description..."></textarea>
+    </div>
+    <div class="form-row">
+      <label>Récurrence</label>
+      <select id="eventRecurr" class="form-input">
+        <option value="none">Aucune</option>
+        <option value="daily">Quotidienne</option>
+        <option value="weekly">Hebdomadaire</option>
+        <option value="monthly">Mensuelle</option>
+      </select>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-secondary" onclick="Modal.close('eventModal')">Annuler</button>
+    <button class="btn btn-danger hidden" id="eventDeleteBtn">Supprimer</button>
+    <button class="btn btn-primary" id="eventSaveBtn">Enregistrer</button>
+  </div>
+</div>
+
+<!-- Task Modal -->
+<div class="modal hidden" id="taskModal">
+  <div class="modal-header">
+    <h2 id="taskModalTitle">Nouvelle tâche</h2>
+    <button class="modal-close" onclick="Modal.close('taskModal')">×</button>
+  </div>
+  <div class="modal-body">
+    <input type="hidden" id="taskId">
+    <div class="form-row">
+      <label>Titre *</label>
+      <input type="text" id="taskTitle" class="form-input" placeholder="Titre de la tâche">
+    </div>
+    <div class="form-row two-col">
+      <div>
+        <label>Date limite</label>
+        <input type="date" id="taskDeadline" class="form-input">
+      </div>
+      <div>
+        <label>Heure</label>
+        <input type="time" id="taskTime" class="form-input">
+      </div>
+    </div>
+    <div class="form-row two-col">
+      <div>
+        <label>Priorité</label>
+        <select id="taskPriority" class="form-input">
+          <option value="low">Basse</option>
+          <option value="medium" selected>Moyenne</option>
+          <option value="high">Haute</option>
+        </select>
+      </div>
+      <div>
+        <label>Catégorie</label>
+        <select id="taskCategory" class="form-input">
+          <option value="work">Travail</option>
+          <option value="study">Étude</option>
+          <option value="personal">Personnel</option>
+          <option value="health">Santé</option>
+          <option value="other">Autre</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label>Description</label>
+      <textarea id="taskDesc" class="form-textarea" rows="2" placeholder="Description..."></textarea>
+    </div>
+    <div class="form-row">
+      <label>Durée estimée (minutes)</label>
+      <input type="number" id="taskDuration" class="form-input" min="5" step="5" placeholder="30">
+    </div>
+    <div class="form-row">
+      <label>Sous-tâches</label>
+      <div id="subtasksList" class="subtasks-list"></div>
+      <div class="subtask-add-row">
+        <input type="text" id="subtaskInput" class="form-input" placeholder="Ajouter une sous-tâche...">
+        <button class="btn btn-sm btn-secondary" onclick="TaskModule.addSubtask()">+</button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-secondary" onclick="Modal.close('taskModal')">Annuler</button>
+    <button class="btn btn-danger hidden" id="taskDeleteBtn">Supprimer</button>
+    <button class="btn btn-primary" id="taskSaveBtn">Enregistrer</button>
+  </div>
+</div>
+
+<!-- Habit Modal -->
+<div class="modal hidden" id="habitModal">
+  <div class="modal-header">
+    <h2 id="habitModalTitle">Nouvelle habitude</h2>
+    <button class="modal-close" onclick="Modal.close('habitModal')">×</button>
+  </div>
+  <div class="modal-body">
+    <input type="hidden" id="habitId">
+    <div class="form-row">
+      <label>Nom *</label>
+      <input type="text" id="habitName" class="form-input" placeholder="Ex: Lire 20 minutes">
+    </div>
+    <div class="form-row two-col">
+      <div>
+        <label>Icône</label>
+        <input type="text" id="habitIcon" class="form-input" maxlength="4" placeholder="📚">
+      </div>
+      <div>
+        <label>Couleur</label>
+        <input type="color" id="habitColor" class="form-input color-input" value="#6366f1">
+      </div>
+    </div>
+    <div class="form-row">
+      <label>Catégorie</label>
+      <select id="habitCategory" class="form-input">
+        <option value="health">Santé</option>
+        <option value="learning">Apprentissage</option>
+        <option value="productivity">Productivité</option>
+        <option value="mindfulness">Bien-être</option>
+        <option value="fitness">Sport</option>
+        <option value="other">Autre</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label>Description</label>
+      <textarea id="habitDesc" class="form-textarea" rows="2" placeholder="Description..."></textarea>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-secondary" onclick="Modal.close('habitModal')">Annuler</button>
+    <button class="btn btn-danger hidden" id="habitDeleteBtn">Supprimer</button>
+    <button class="btn btn-primary" id="habitSaveBtn">Enregistrer</button>
+  </div>
+</div>
+
+<!-- Goal Modal -->
+<div class="modal hidden" id="goalModal">
+  <div class="modal-header">
+    <h2 id="goalModalTitle">Nouvel objectif</h2>
+    <button class="modal-close" onclick="Modal.close('goalModal')">×</button>
+  </div>
+  <div class="modal-body">
+    <input type="hidden" id="goalId">
+    <div class="form-row">
+      <label>Titre *</label>
+      <input type="text" id="goalTitle" class="form-input" placeholder="Mon objectif">
+    </div>
+    <div class="form-row">
+      <label>Description</label>
+      <textarea id="goalDesc" class="form-textarea" rows="2" placeholder="Description..."></textarea>
+    </div>
+    <div class="form-row two-col">
+      <div>
+        <label>Date de début</label>
+        <input type="date" id="goalStart" class="form-input">
+      </div>
+      <div>
+        <label>Date cible</label>
+        <input type="date" id="goalTarget" class="form-input">
+      </div>
+    </div>
+    <div class="form-row two-col">
+      <div>
+        <label>Priorité</label>
+        <select id="goalPriority" class="form-input">
+          <option value="low">Basse</option>
+          <option value="medium" selected>Moyenne</option>
+          <option value="high">Haute</option>
+        </select>
+      </div>
+      <div>
+        <label>Catégorie</label>
+        <select id="goalCategory" class="form-input">
+          <option value="personal">Personnel</option>
+          <option value="professional">Professionnel</option>
+          <option value="learning">Apprentissage</option>
+          <option value="health">Santé</option>
+          <option value="finance">Finance</option>
+          <option value="other">Autre</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label>Progression (%)</label>
+      <input type="range" id="goalProgress" class="form-range" min="0" max="100" value="0">
+      <span id="goalProgressLabel">0%</span>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-secondary" onclick="Modal.close('goalModal')">Annuler</button>
+    <button class="btn btn-danger hidden" id="goalDeleteBtn">Supprimer</button>
+    <button class="btn btn-primary" id="goalSaveBtn">Enregistrer</button>
+  </div>
+</div>
+
+<!-- Subject Modal -->
+<div class="modal hidden" id="subjectModal">
+  <div class="modal-header">
+    <h2 id="subjectModalTitle">Nouvelle matière</h2>
+    <button class="modal-close" onclick="Modal.close('subjectModal')">×</button>
+  </div>
+  <div class="modal-body">
+    <input type="hidden" id="subjectId">
+    <div class="form-row">
+      <label>Nom *</label>
+      <input type="text" id="subjectName" class="form-input" placeholder="Ex: Mathématiques">
+    </div>
+    <div class="form-row two-col">
+      <div>
+        <label>Icône</label>
+        <input type="text" id="subjectIcon" class="form-input" maxlength="4" placeholder="📐">
+      </div>
+      <div>
+        <label>Couleur</label>
+        <input type="color" id="subjectColor" class="form-input color-input" value="#6366f1">
+      </div>
+    </div>
+    <div class="form-row">
+      <label>Niveau actuel</label>
+      <select id="subjectLevel" class="form-input">
+        <option value="debutant">Débutant</option>
+        <option value="intermediaire">Intermédiaire</option>
+        <option value="avance">Avancé</option>
+        <option value="expert">Expert</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label>Objectif</label>
+      <textarea id="subjectObjective" class="form-textarea" rows="2" placeholder="Mon objectif pour cette matière..."></textarea>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-secondary" onclick="Modal.close('subjectModal')">Annuler</button>
+    <button class="btn btn-danger hidden" id="subjectDeleteBtn">Supprimer</button>
+    <button class="btn btn-primary" id="subjectSaveBtn">Enregistrer</button>
+  </div>
+</div>
+
+<!-- Subject Task Modal -->
+<div class="modal hidden" id="subjectTaskModal">
+  <div class="modal-header">
+    <h2 id="subjectTaskModalTitle">Nouvelle tâche</h2>
+    <button class="modal-close" onclick="Modal.close('subjectTaskModal')">×</button>
+  </div>
+  <div class="modal-body">
+    <input type="hidden" id="subjectTaskId">
+    <input type="hidden" id="subjectTaskSubjectId">
+    <div class="form-row">
+      <label>Titre *</label>
+      <input type="text" id="subjectTaskTitle" class="form-input" placeholder="Ex: Faire le TP 3">
+    </div>
+    <div class="form-row two-col">
+      <div>
+        <label>Catégorie</label>
+        <select id="subjectTaskCategory" class="form-input">
+          <option value="Cours">Cours</option>
+          <option value="TP">TP</option>
+          <option value="Exercice">Exercice</option>
+          <option value="Vidéo YouTube">Vidéo YouTube</option>
+          <option value="Révision">Révision</option>
+          <option value="Devoir">Devoir</option>
+          <option value="Projet">Projet</option>
+          <option value="Lecture">Lecture</option>
+        </select>
+      </div>
+      <div>
+        <label>Priorité</label>
+        <select id="subjectTaskPriority" class="form-input">
+          <option value="low">Basse</option>
+          <option value="medium" selected>Moyenne</option>
+          <option value="high">Haute</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label>Description (optionnel)</label>
+      <textarea id="subjectTaskDescription" class="form-textarea" rows="2" placeholder="Détails de la tâche..."></textarea>
+    </div>
+    <div class="form-row two-col">
+      <div>
+        <label>Date limite (optionnel)</label>
+        <input type="date" id="subjectTaskDeadline" class="form-input">
+      </div>
+      <div>
+        <label>Statut</label>
+        <select id="subjectTaskStatus" class="form-input">
+          <option value="todo">À faire</option>
+          <option value="progress">En cours</option>
+          <option value="done">Terminé</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label>Lien (optionnel)</label>
+      <input type="url" id="subjectTaskLink" class="form-input" placeholder="https://...">
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-secondary" onclick="Modal.close('subjectTaskModal')">Annuler</button>
+    <button class="btn btn-danger hidden" id="subjectTaskDeleteBtn">Supprimer</button>
+    <button class="btn btn-primary" id="subjectTaskSaveBtn">Enregistrer</button>
+  </div>
+</div>
+
+<!-- Subject Resource Modal -->
+<div class="modal hidden" id="subjectResourceModal">
+  <div class="modal-header">
+    <h2 id="subjectResourceModalTitle">Nouvelle ressource</h2>
+    <button class="modal-close" onclick="Modal.close('subjectResourceModal')">×</button>
+  </div>
+  <div class="modal-body">
+    <input type="hidden" id="subjectResourceId">
+    <input type="hidden" id="subjectResourceSubjectId">
+    <div class="form-row">
+      <label>Titre *</label>
+      <input type="text" id="subjectResourceTitle" class="form-input" placeholder="Ex: Cours magistral - Tri par insertion">
+    </div>
+    <div class="form-row">
+      <label>Type</label>
+      <select id="subjectResourceType" class="form-input">
+        <option value="Cours">Cours</option>
+        <option value="PDF">PDF</option>
+        <option value="Vidéo YouTube">Vidéo YouTube</option>
+        <option value="Note">Note</option>
+        <option value="Document">Document</option>
+        <option value="Exercice">Exercice</option>
+        <option value="Chapitre">Chapitre</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label>Lien (optionnel)</label>
+      <input type="url" id="subjectResourceLink" class="form-input" placeholder="https://...">
+    </div>
+    <div class="form-row">
+      <label>Description (optionnel)</label>
+      <textarea id="subjectResourceDescription" class="form-textarea" rows="2" placeholder="Notes sur cette ressource..."></textarea>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-secondary" onclick="Modal.close('subjectResourceModal')">Annuler</button>
+    <button class="btn btn-danger hidden" id="subjectResourceDeleteBtn">Supprimer</button>
+    <button class="btn btn-primary" id="subjectResourceSaveBtn">Enregistrer</button>
+  </div>
+</div>
+
+<!-- Quick Add Modal -->
+<div class="modal modal-sm hidden" id="quickAddModal">
+  <div class="modal-header">
+    <h2>Ajout rapide</h2>
+    <button class="modal-close" onclick="Modal.close('quickAddModal')">×</button>
+  </div>
+  <div class="modal-body">
+    <div class="quick-add-tabs" id="quickAddTabs">
+      <button class="qa-tab active" data-qa="event">Événement</button>
+      <button class="qa-tab" data-qa="task">Tâche</button>
+      <button class="qa-tab" data-qa="note">Note rapide</button>
+    </div>
+    <div id="quickAddContent"></div>
+  </div>
+</div>
+
+<!-- Toast container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ════════════════════ FOCUS OVERLAY ════════════════════ -->
+<div class="focus-overlay" id="focusOverlay">
+  <canvas id="focusCanvas"></canvas>
+
+  <!-- Breathing rings -->
+  <div class="breath-ring breath-ring-1" id="breathRing1"></div>
+  <div class="breath-ring breath-ring-2" id="breathRing2"></div>
+  <div class="breath-ring breath-ring-3" id="breathRing3"></div>
+
+  <!-- Top bar -->
+  <div class="focus-topbar">
+    <div class="focus-session-meta">
+      <div class="focus-phase-pill" id="focusPhasePill">CONCENTRATION</div>
+      <div class="focus-linked-label" id="focusLinkedLabel"></div>
+    </div>
+    <div class="focus-top-stats">
+      <div class="focus-top-stat">
+        <span id="ftDone">0</span>
+        <small>Terminés</small>
+      </div>
+      <div class="focus-top-stat">
+        <span id="ftGoal">8</span>
+        <small>Objectif</small>
+      </div>
+      <div class="focus-top-stat">
+        <span id="ftTime">0h 0m</span>
+        <small>Focus total</small>
+      </div>
+    </div>
+    <button class="focus-exit-btn" onclick="PomodoroModule.exitFocus()">
+      <svg viewBox="0 0 24 24" style="width:16px;height:16px"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      Quitter
+    </button>
+  </div>
+
+  <!-- Center: big timer -->
+  <div class="focus-center">
+    <div class="focus-subject-name" id="focusSubjectName"></div>
+
+    <div class="focus-timer-wrap">
+      <!-- Glow halo -->
+      <div class="focus-timer-glow" id="focusTimerGlow"></div>
+      <!-- SVG ring -->
+      <svg class="focus-timer-svg" viewBox="0 0 320 320">
+        <defs>
+          <linearGradient id="timerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" id="gradStop1" stop-color="#818cf8"/>
+            <stop offset="100%" id="gradStop2" stop-color="#6366f1"/>
+          </linearGradient>
+        </defs>
+        <circle class="focus-ring-bg" cx="160" cy="160" r="140"/>
+        <circle class="focus-ring-track" cx="160" cy="160" r="140"/>
+        <circle class="focus-ring-prog" id="focusRingProg" cx="160" cy="160" r="140"/>
+      </svg>
+      <!-- Inner content -->
+      <div class="focus-timer-inner">
+        <div class="focus-cycle-label" id="focusCycleLabel">Cycle 1 / 4</div>
+        <div class="focus-time-display" id="focusTimeDisplay">25:00</div>
+        <div class="focus-phase-label" id="focusPhaseLabel">Concentration</div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="focus-controls">
+      <button class="focus-ctrl-btn focus-ctrl-secondary" onclick="PomodoroModule.resetTimer()" title="Réinitialiser">
+        <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 101.41-5.31L1 10"/></svg>
+      </button>
+      <button class="focus-ctrl-btn focus-ctrl-primary" id="focusPlayBtn" onclick="PomodoroModule.toggleTimer()">
+        <svg id="focusPlayIcon" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      </button>
+      <button class="focus-ctrl-btn focus-ctrl-secondary" onclick="PomodoroModule.skipPhase()" title="Passer">
+        <svg viewBox="0 0 24 24"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
+      </button>
+    </div>
+
+    <!-- Motivational text -->
+    <div class="focus-motivation" id="focusMotivation">Restez concentré. Chaque minute compte.</div>
+  </div>
+
+  <!-- Bottom: progress dots -->
+  <div class="focus-bottom">
+    <div class="focus-dots" id="focusDots"></div>
+    <div class="focus-bottom-msg" id="focusBottomMsg">Aujourd'hui : <strong id="focusBottomCount">0 / 8</strong> Pomodoro</div>
+  </div>
+</div>
+
+<!-- ════════════════════ MOBILE BOTTOM NAV ════════════════════ -->
+<nav class="mobile-nav" id="mobileNav">
+  <a class="mob-nav-item active" data-page="dashboard">
+    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+    <span>Accueil</span>
+  </a>
+  <a class="mob-nav-item" data-page="tasks">
+    <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+    <span>Tâches</span>
+  </a>
+  <a class="mob-nav-item" data-page="pomodoro">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    <span>Focus</span>
+  </a>
+  <a class="mob-nav-item" data-page="finances">
+    <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+    <span>Finances</span>
+  </a>
+  <a class="mob-nav-item" data-page="languages">
+    <svg viewBox="0 0 24 24"><path d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8l1 12a2 2 0 002 2h8a2 2 0 002-2l1-12"/><path d="M9.5 8v1a2.5 2.5 0 005 0V8"/></svg>
+    <span>Langues</span>
+  </a>
+  <a class="mob-nav-item" data-page="calendar">
+    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    <span>Agenda</span>
+  </a>
+  <button class="mob-nav-item mob-nav-more" id="mobMoreBtn">
+    <svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    <span>Plus</span>
+  </button>
+</nav>
+
+<script src="app.js"></script>
+</body>
+</html>
