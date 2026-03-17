@@ -179,16 +179,68 @@ const Utils = {
 };
 
 const QUOTES = [
-  { text:"La discipline est le pont entre les objectifs et les réalisations.", author:"Jim Rohn" },
-  { text:"Le succès n'est pas final, l'échec n'est pas fatal. C'est le courage de continuer qui compte.", author:"Winston Churchill" },
-  { text:"Chaque jour est une nouvelle chance de changer votre vie.", author:"Anonymous" },
-  { text:"L'organisation n'est pas une option, c'est une nécessité.", author:"Oprah Winfrey" },
-  { text:"Ce que vous faites aujourd'hui peut améliorer tous vos lendemains.", author:"Ralph Marston" },
-  { text:"La productivité n'est jamais un accident. C'est toujours le résultat d'un engagement envers l'excellence.", author:"Paul J. Meyer" },
-  { text:"Investissez dans votre cerveau. C'est le seul investissement qui rapporte toujours.", author:"Benjamin Franklin" },
-  { text:"Le temps que vous profitez de gaspiller n'est pas du temps gaspillé.", author:"Bertrand Russell" },
-  { text:"Le moment de commencer est maintenant. Si pas maintenant, alors quand ?", author:"Unknown" },
-  { text:"Soyez plus fort que votre excuse la plus solide.", author:"Unknown" },
+  { text: "The secret of getting ahead is getting started. Stop waiting for the perfect moment — it doesn't exist.", author: "Mark Twain", source: "Life Wisdom" },
+  { text: "Invest in yourself. Your career is the engine of your wealth.", author: "Paul Clitheroe", source: "Financial Advice" },
+  { text: "You are the average of the five people you spend the most time with. Choose wisely.", author: "Jim Rohn", source: "The Art of Exceptional Living" },
+  { text: "Your 20s are your 'selfish' years. It's a decade to immerse yourself in every single thing possible. Be selfish with your time, and all-around goals.", author: "Kyoko Escamilla", source: "Life Advice" },
+  { text: "Don't compare your chapter 1 to someone else's chapter 20. Run your own race.", author: "Anonymous", source: "Life Wisdom" },
+  { text: "Read every day. Not social media — real books. One book a month changes who you are in 5 years.", author: "Charlie Munger", source: "Poor Charlie's Almanack" },
+  { text: "Sleep is not a luxury — it's a weapon. Protect it like your most valuable asset.", author: "Matthew Walker", source: "Why We Sleep" },
+  { text: "Your habits will either make you or break you. Small daily improvements lead to staggering results.", author: "Robin Sharma", source: "The 5 AM Club" },
+  { text: "The most dangerous risk of all is the risk of spending your life not doing what you want, on the bet you can buy yourself the freedom to do it later.", author: "Randy Komisar", source: "The Monk and the Riddle" },
+  { text: "Hard choices, easy life. Easy choices, hard life. The pain of discipline is always less than the pain of regret.", author: "Jerzy Gregorek", source: "The Happy Body" },
+  { text: "Learn to be comfortable being uncomfortable. Growth lives outside your comfort zone.", author: "David Goggins", source: "Can't Hurt Me" },
+  { text: "Your body is the most important tool you'll ever own. Exercise isn't optional — it's maintenance.", author: "James Clear", source: "Atomic Habits" },
+  { text: "Show up every day, even when you don't feel like it. Motivation follows action, not the other way around.", author: "Jordan Peterson", source: "12 Rules for Life" },
+  { text: "Don't spend money you don't have to impress people you don't like. Save first, spend what's left.", author: "Warren Buffett", source: "Investor Wisdom" },
+  { text: "Say yes to things that scare you a little. That fear is the compass pointing to your growth.", author: "Tim Ferriss", source: "The 4-Hour Workweek" },
+  { text: "Stop trying to be liked by everyone. The people who matter will respect your authenticity.", author: "Brené Brown", source: "Daring Greatly" },
+  { text: "Learn one new skill per year that has nothing to do with your major. Curiosity is a superpower.", author: "Naval Ravikant", source: "The Almanack of Naval Ravikant" },
+  { text: "Your attention is your most valuable resource. Guard it from anyone who tries to steal it for free.", author: "Cal Newport", source: "Deep Work" },
+  { text: "Failure is not the opposite of success. It is part of success. Fail fast, learn faster.", author: "Arianna Huffington", source: "Thrive" },
+  { text: "Start saving money now, even if it's just $20 a month. Compound interest is the eighth wonder of the world.", author: "Albert Einstein", source: "Financial Wisdom" },
+  { text: "Learn to cook. It saves money, improves your health, and impresses people — all at once.", author: "Michael Pollan", source: "In Defense of Food" },
+  { text: "Write down your goals. People who write their goals are 42% more likely to achieve them.", author: "Dr. Gail Matthews", source: "Research on Goal Setting" },
+  { text: "The best investment you can make is in your own abilities. Anything you can do to develop your own abilities is likely to be more productive.", author: "Warren Buffett", source: "Investor Wisdom" },
+  { text: "Take care of your mental health. Therapy is not weakness — it is maintenance for your mind.", author: "Anonymous", source: "Modern Wisdom" },
+  { text: "Spend time alone with your thoughts. People who can't be alone with themselves are running from something important.", author: "Blaise Pascal", source: "Pensées" },
+  { text: "Travel somewhere completely different from home before you're 25. It will change your perspective forever.", author: "Anthony Bourdain", source: "Kitchen Confidential" },
+  { text: "Ask for help. The smartest people in any room are the ones willing to admit what they don't know.", author: "Adam Grant", source: "Give and Take" },
+  { text: "Stop looking for shortcuts. The 'shortcut' is doing the work consistently, every single day.", author: "David Goggins", source: "Can't Hurt Me" },
+  { text: "Your major doesn't define your career. Your skills, network, and work ethic do.", author: "Reid Hoffman", source: "The Start-Up of You" },
+  { text: "Drink more water. Most of the fatigue, brain fog, and bad moods you feel are just dehydration.", author: "Anonymous", source: "Health Wisdom" },
+  { text: "Every time you feel the urge to scroll mindlessly, replace it with 5 pages of a book. You'll be shocked where you are in a year.", author: "Ryan Holiday", source: "The Daily Stoic" },
+  { text: "Learn to say no without guilt. Your time is finite and precious. Protect it.", author: "Greg McKeown", source: "Essentialism" },
+  { text: "Build a morning routine. How you start your day determines how you live your day.", author: "Hal Elrod", source: "The Miracle Morning" },
+  { text: "Surround yourself with people who push you to be better, not people who are comfortable with you staying the same.", author: "Jim Rohn", source: "The Art of Exceptional Living" },
+  { text: "Keep a journal. Your future self will thank you for documenting your thoughts, struggles, and growth.", author: "Marcus Aurelius", source: "Meditations" },
+  { text: "Stop comparing your life to a highlight reel on social media. Everyone is fighting a battle you know nothing about.", author: "Plato", source: "Ancient Wisdom" },
+  { text: "Learn the basics of finance: budgeting, investing, taxes. Nobody teaches you this in school, but your future depends on it.", author: "Robert Kiyosaki", source: "Rich Dad Poor Dad" },
+  { text: "Apologize when you're wrong. It takes more strength to admit a mistake than to defend it.", author: "Anonymous", source: "Life Wisdom" },
+  { text: "Eat well. You don't have to be perfect — just eat more vegetables, less junk, and fewer things from a factory.", author: "Michael Pollan", source: "Food Rules" },
+  { text: "The people you meet in your 20s will become the network that defines your 30s. Invest in genuine relationships.", author: "Keith Ferrazzi", source: "Never Eat Alone" },
+  { text: "Learn to manage your emotions before they manage you. Emotional intelligence is worth more than IQ.", author: "Daniel Goleman", source: "Emotional Intelligence" },
+  { text: "Build something. A project, a skill, a blog, a business. Creating things teaches you more than consuming ever will.", author: "Paul Graham", source: "Hackers & Painters" },
+  { text: "Forgive people — not for them, but for yourself. Holding a grudge is like drinking poison and expecting the other person to die.", author: "Buddha", source: "Ancient Wisdom" },
+  { text: "Quit things that don't serve you. Bad habits, toxic friendships, careers you hate. Life is too short for mediocrity.", author: "Mark Manson", source: "The Subtle Art of Not Giving a F*ck" },
+  { text: "Your 20s are for building skills, not just titles. Focus on becoming great at something, not just getting promoted.", author: "Cal Newport", source: "So Good They Can't Ignore You" },
+  { text: "Time in the market beats timing the market. Start investing early, even small amounts.", author: "John Bogle", source: "The Little Book of Common Sense Investing" },
+  { text: "The discipline you build in your 20s becomes the freedom you enjoy in your 40s.", author: "Anonymous", source: "Life Wisdom" },
+  { text: "Learn a second language. It doubles the number of people you can connect with and worlds you can access.", author: "Nelson Mandela", source: "Long Walk to Freedom" },
+  { text: "Don't rush into a relationship. Know who you are first. A partner should complement your life, not complete it.", author: "Anonymous", source: "Modern Wisdom" },
+  { text: "Get outside every day. Nature reduces cortisol, improves mood, and boosts creativity — for free.", author: "Florence Williams", source: "The Nature Fix" },
+  { text: "Be on time. Punctuality is a form of respect that people notice — and so does its absence.", author: "Anonymous", source: "Life Wisdom" },
+  { text: "Focus on one thing at a time. Multitasking is a myth that kills quality and drains energy.", author: "Gary Keller", source: "The ONE Thing" },
+  { text: "Don't let perfect be the enemy of good. Done and imperfect beats perfect and never started.", author: "Voltaire", source: "Philosophical Wisdom" },
+  { text: "Your reputation takes years to build and seconds to destroy. Think before you speak, post, or act.", author: "Warren Buffett", source: "Investor Wisdom" },
+  { text: "Stop waiting for motivation. Build systems and routines — motivation is unreliable, discipline is not.", author: "Jocko Willink", source: "Discipline Equals Freedom" },
+  { text: "Gratitude is the fastest way to feel better instantly. List 3 things you're grateful for every morning.", author: "Tony Robbins", source: "Awaken the Giant Within" },
+  { text: "Learn how to learn. The ability to pick up new skills quickly is the most valuable skill in a changing world.", author: "Scott Young", source: "Ultralearning" },
+  { text: "Be kind to strangers. You never know when a small act of kindness becomes the turning point in someone's day.", author: "Anonymous", source: "Life Wisdom" },
+  { text: "The quality of your questions determines the quality of your life. Ask better questions.", author: "Tony Robbins", source: "Awaken the Giant Within" },
+  { text: "Master the art of delayed gratification. The ability to wait and work toward long-term goals is a rare and powerful skill.", author: "Walter Mischel", source: "The Marshmallow Test" },
+  { text: "Spend money on experiences, not things. Experiences become stories, things become clutter.", author: "Thomas Gilovich", source: "Cornell Happiness Research" },
+  { text: "Never stop learning. The day you stop learning is the day you start becoming irrelevant.", author: "Albert Einstein", source: "Scientific Wisdom" },
 ];
 
 // ════════════════════════════════════════════════════════
@@ -557,11 +609,13 @@ const DashModule = {
   },
 
   renderQuote() {
-    const q = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+    // Same quote all day, changes at midnight — deterministic from date
+    const dayIndex = Math.floor(Date.now() / 86400000);
+    const q = QUOTES[dayIndex % QUOTES.length];
     const t = document.getElementById('quoteText');
     const a = document.getElementById('quoteAuthor');
     if(t) t.textContent = q.text;
-    if(a) a.textContent = '— ' + q.author;
+    if(a) a.textContent = `— ${q.author}${q.source ? '  ·  ' + q.source : ''}`;
   }
 };
 
