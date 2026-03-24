@@ -37,7 +37,7 @@ const DB = {
   saveSubjects(s)      { this.set('subjects', s); },
   addSubject(s)        { const list = this.getSubjects(); list.push(s); this.saveSubjects(list); },
   updateSubject(s)     { const list = this.getSubjects(); const i = list.findIndex(x=>x.id===s.id); if(i>-1){list[i]=s;this.saveSubjects(list);} },
-  deleteSubject(id)    { this.saveSubjects(this.getSubjects().filter(s=>s.id!==id)); this.saveLessons(this.getLessons().filter(l=>l.subjectId!==id)); this.saveSubjectTasks(this.getSubjectTasks().filter(t=>t.subjectId!==id)); this.saveSubjectResources(this.getSubjectResources().filter(r=>r.subjectId!==id)); const _n=this.getSubjectNotes(); delete _n[id]; this.set('subject_notes',_n); },
+  deleteSubject(id)    { this.saveSubjects(this.getSubjects().filter(s=>s.id!==id)); this.saveLessons(this.getLessons().filter(l=>l.subjectId!==id)); },
 
   // Lessons
   getLessons()         { return this.get('lessons') || []; },
@@ -46,27 +46,6 @@ const DB = {
   updateLesson(l)      { const list = this.getLessons(); const i = list.findIndex(x=>x.id===l.id); if(i>-1){list[i]=l;this.saveLessons(list);} },
   deleteLesson(id)     { this.saveLessons(this.getLessons().filter(l=>l.id!==id)); },
   getLessonsForSubject(sid) { return this.getLessons().filter(l=>l.subjectId===sid); },
-
-  // Subject Tasks (Learning)
-  getSubjectTasks()        { return this.get('subject_tasks') || []; },
-  saveSubjectTasks(t)      { this.set('subject_tasks', t); },
-  addSubjectTask(t)        { const list = this.getSubjectTasks(); list.push(t); this.saveSubjectTasks(list); },
-  updateSubjectTask(t)     { const list = this.getSubjectTasks(); const i = list.findIndex(x=>x.id===t.id); if(i>-1){list[i]=t;this.saveSubjectTasks(list);} },
-  deleteSubjectTask(id)    { this.saveSubjectTasks(this.getSubjectTasks().filter(t=>t.id!==id)); },
-  getTasksForSubject(sid)  { return this.getSubjectTasks().filter(t=>t.subjectId===sid); },
-
-  // Subject Resources (Learning)
-  getSubjectResources()       { return this.get('subject_resources') || []; },
-  saveSubjectResources(r)     { this.set('subject_resources', r); },
-  addSubjectResource(r)       { const list = this.getSubjectResources(); list.push(r); this.saveSubjectResources(list); },
-  updateSubjectResource(r)    { const list = this.getSubjectResources(); const i = list.findIndex(x=>x.id===r.id); if(i>-1){list[i]=r;this.saveSubjectResources(list);} },
-  deleteSubjectResource(id)   { this.saveSubjectResources(this.getSubjectResources().filter(r=>r.id!==id)); },
-  getResourcesForSubject(sid) { return this.getSubjectResources().filter(r=>r.subjectId===sid); },
-
-  // Subject Notes (Learning)
-  getSubjectNotes()          { return this.get('subject_notes') || {}; },
-  getSubjectNote(sid)        { return (this.getSubjectNotes())[sid] || ''; },
-  saveSubjectNote(sid, text) { const n = this.getSubjectNotes(); n[sid] = text; this.set('subject_notes', n); },
 
   // Habits
   getHabits()          { return this.get('habits') || []; },
@@ -179,68 +158,16 @@ const Utils = {
 };
 
 const QUOTES = [
-  { text: "The secret of getting ahead is getting started. Stop waiting for the perfect moment — it doesn't exist.", author: "Mark Twain", source: "Life Wisdom" },
-  { text: "Invest in yourself. Your career is the engine of your wealth.", author: "Paul Clitheroe", source: "Financial Advice" },
-  { text: "You are the average of the five people you spend the most time with. Choose wisely.", author: "Jim Rohn", source: "The Art of Exceptional Living" },
-  { text: "Your 20s are your 'selfish' years. It's a decade to immerse yourself in every single thing possible. Be selfish with your time, and all-around goals.", author: "Kyoko Escamilla", source: "Life Advice" },
-  { text: "Don't compare your chapter 1 to someone else's chapter 20. Run your own race.", author: "Anonymous", source: "Life Wisdom" },
-  { text: "Read every day. Not social media — real books. One book a month changes who you are in 5 years.", author: "Charlie Munger", source: "Poor Charlie's Almanack" },
-  { text: "Sleep is not a luxury — it's a weapon. Protect it like your most valuable asset.", author: "Matthew Walker", source: "Why We Sleep" },
-  { text: "Your habits will either make you or break you. Small daily improvements lead to staggering results.", author: "Robin Sharma", source: "The 5 AM Club" },
-  { text: "The most dangerous risk of all is the risk of spending your life not doing what you want, on the bet you can buy yourself the freedom to do it later.", author: "Randy Komisar", source: "The Monk and the Riddle" },
-  { text: "Hard choices, easy life. Easy choices, hard life. The pain of discipline is always less than the pain of regret.", author: "Jerzy Gregorek", source: "The Happy Body" },
-  { text: "Learn to be comfortable being uncomfortable. Growth lives outside your comfort zone.", author: "David Goggins", source: "Can't Hurt Me" },
-  { text: "Your body is the most important tool you'll ever own. Exercise isn't optional — it's maintenance.", author: "James Clear", source: "Atomic Habits" },
-  { text: "Show up every day, even when you don't feel like it. Motivation follows action, not the other way around.", author: "Jordan Peterson", source: "12 Rules for Life" },
-  { text: "Don't spend money you don't have to impress people you don't like. Save first, spend what's left.", author: "Warren Buffett", source: "Investor Wisdom" },
-  { text: "Say yes to things that scare you a little. That fear is the compass pointing to your growth.", author: "Tim Ferriss", source: "The 4-Hour Workweek" },
-  { text: "Stop trying to be liked by everyone. The people who matter will respect your authenticity.", author: "Brené Brown", source: "Daring Greatly" },
-  { text: "Learn one new skill per year that has nothing to do with your major. Curiosity is a superpower.", author: "Naval Ravikant", source: "The Almanack of Naval Ravikant" },
-  { text: "Your attention is your most valuable resource. Guard it from anyone who tries to steal it for free.", author: "Cal Newport", source: "Deep Work" },
-  { text: "Failure is not the opposite of success. It is part of success. Fail fast, learn faster.", author: "Arianna Huffington", source: "Thrive" },
-  { text: "Start saving money now, even if it's just $20 a month. Compound interest is the eighth wonder of the world.", author: "Albert Einstein", source: "Financial Wisdom" },
-  { text: "Learn to cook. It saves money, improves your health, and impresses people — all at once.", author: "Michael Pollan", source: "In Defense of Food" },
-  { text: "Write down your goals. People who write their goals are 42% more likely to achieve them.", author: "Dr. Gail Matthews", source: "Research on Goal Setting" },
-  { text: "The best investment you can make is in your own abilities. Anything you can do to develop your own abilities is likely to be more productive.", author: "Warren Buffett", source: "Investor Wisdom" },
-  { text: "Take care of your mental health. Therapy is not weakness — it is maintenance for your mind.", author: "Anonymous", source: "Modern Wisdom" },
-  { text: "Spend time alone with your thoughts. People who can't be alone with themselves are running from something important.", author: "Blaise Pascal", source: "Pensées" },
-  { text: "Travel somewhere completely different from home before you're 25. It will change your perspective forever.", author: "Anthony Bourdain", source: "Kitchen Confidential" },
-  { text: "Ask for help. The smartest people in any room are the ones willing to admit what they don't know.", author: "Adam Grant", source: "Give and Take" },
-  { text: "Stop looking for shortcuts. The 'shortcut' is doing the work consistently, every single day.", author: "David Goggins", source: "Can't Hurt Me" },
-  { text: "Your major doesn't define your career. Your skills, network, and work ethic do.", author: "Reid Hoffman", source: "The Start-Up of You" },
-  { text: "Drink more water. Most of the fatigue, brain fog, and bad moods you feel are just dehydration.", author: "Anonymous", source: "Health Wisdom" },
-  { text: "Every time you feel the urge to scroll mindlessly, replace it with 5 pages of a book. You'll be shocked where you are in a year.", author: "Ryan Holiday", source: "The Daily Stoic" },
-  { text: "Learn to say no without guilt. Your time is finite and precious. Protect it.", author: "Greg McKeown", source: "Essentialism" },
-  { text: "Build a morning routine. How you start your day determines how you live your day.", author: "Hal Elrod", source: "The Miracle Morning" },
-  { text: "Surround yourself with people who push you to be better, not people who are comfortable with you staying the same.", author: "Jim Rohn", source: "The Art of Exceptional Living" },
-  { text: "Keep a journal. Your future self will thank you for documenting your thoughts, struggles, and growth.", author: "Marcus Aurelius", source: "Meditations" },
-  { text: "Stop comparing your life to a highlight reel on social media. Everyone is fighting a battle you know nothing about.", author: "Plato", source: "Ancient Wisdom" },
-  { text: "Learn the basics of finance: budgeting, investing, taxes. Nobody teaches you this in school, but your future depends on it.", author: "Robert Kiyosaki", source: "Rich Dad Poor Dad" },
-  { text: "Apologize when you're wrong. It takes more strength to admit a mistake than to defend it.", author: "Anonymous", source: "Life Wisdom" },
-  { text: "Eat well. You don't have to be perfect — just eat more vegetables, less junk, and fewer things from a factory.", author: "Michael Pollan", source: "Food Rules" },
-  { text: "The people you meet in your 20s will become the network that defines your 30s. Invest in genuine relationships.", author: "Keith Ferrazzi", source: "Never Eat Alone" },
-  { text: "Learn to manage your emotions before they manage you. Emotional intelligence is worth more than IQ.", author: "Daniel Goleman", source: "Emotional Intelligence" },
-  { text: "Build something. A project, a skill, a blog, a business. Creating things teaches you more than consuming ever will.", author: "Paul Graham", source: "Hackers & Painters" },
-  { text: "Forgive people — not for them, but for yourself. Holding a grudge is like drinking poison and expecting the other person to die.", author: "Buddha", source: "Ancient Wisdom" },
-  { text: "Quit things that don't serve you. Bad habits, toxic friendships, careers you hate. Life is too short for mediocrity.", author: "Mark Manson", source: "The Subtle Art of Not Giving a F*ck" },
-  { text: "Your 20s are for building skills, not just titles. Focus on becoming great at something, not just getting promoted.", author: "Cal Newport", source: "So Good They Can't Ignore You" },
-  { text: "Time in the market beats timing the market. Start investing early, even small amounts.", author: "John Bogle", source: "The Little Book of Common Sense Investing" },
-  { text: "The discipline you build in your 20s becomes the freedom you enjoy in your 40s.", author: "Anonymous", source: "Life Wisdom" },
-  { text: "Learn a second language. It doubles the number of people you can connect with and worlds you can access.", author: "Nelson Mandela", source: "Long Walk to Freedom" },
-  { text: "Don't rush into a relationship. Know who you are first. A partner should complement your life, not complete it.", author: "Anonymous", source: "Modern Wisdom" },
-  { text: "Get outside every day. Nature reduces cortisol, improves mood, and boosts creativity — for free.", author: "Florence Williams", source: "The Nature Fix" },
-  { text: "Be on time. Punctuality is a form of respect that people notice — and so does its absence.", author: "Anonymous", source: "Life Wisdom" },
-  { text: "Focus on one thing at a time. Multitasking is a myth that kills quality and drains energy.", author: "Gary Keller", source: "The ONE Thing" },
-  { text: "Don't let perfect be the enemy of good. Done and imperfect beats perfect and never started.", author: "Voltaire", source: "Philosophical Wisdom" },
-  { text: "Your reputation takes years to build and seconds to destroy. Think before you speak, post, or act.", author: "Warren Buffett", source: "Investor Wisdom" },
-  { text: "Stop waiting for motivation. Build systems and routines — motivation is unreliable, discipline is not.", author: "Jocko Willink", source: "Discipline Equals Freedom" },
-  { text: "Gratitude is the fastest way to feel better instantly. List 3 things you're grateful for every morning.", author: "Tony Robbins", source: "Awaken the Giant Within" },
-  { text: "Learn how to learn. The ability to pick up new skills quickly is the most valuable skill in a changing world.", author: "Scott Young", source: "Ultralearning" },
-  { text: "Be kind to strangers. You never know when a small act of kindness becomes the turning point in someone's day.", author: "Anonymous", source: "Life Wisdom" },
-  { text: "The quality of your questions determines the quality of your life. Ask better questions.", author: "Tony Robbins", source: "Awaken the Giant Within" },
-  { text: "Master the art of delayed gratification. The ability to wait and work toward long-term goals is a rare and powerful skill.", author: "Walter Mischel", source: "The Marshmallow Test" },
-  { text: "Spend money on experiences, not things. Experiences become stories, things become clutter.", author: "Thomas Gilovich", source: "Cornell Happiness Research" },
-  { text: "Never stop learning. The day you stop learning is the day you start becoming irrelevant.", author: "Albert Einstein", source: "Scientific Wisdom" },
+  { text:"La discipline est le pont entre les objectifs et les réalisations.", author:"Jim Rohn" },
+  { text:"Le succès n'est pas final, l'échec n'est pas fatal. C'est le courage de continuer qui compte.", author:"Winston Churchill" },
+  { text:"Chaque jour est une nouvelle chance de changer votre vie.", author:"Anonymous" },
+  { text:"L'organisation n'est pas une option, c'est une nécessité.", author:"Oprah Winfrey" },
+  { text:"Ce que vous faites aujourd'hui peut améliorer tous vos lendemains.", author:"Ralph Marston" },
+  { text:"La productivité n'est jamais un accident. C'est toujours le résultat d'un engagement envers l'excellence.", author:"Paul J. Meyer" },
+  { text:"Investissez dans votre cerveau. C'est le seul investissement qui rapporte toujours.", author:"Benjamin Franklin" },
+  { text:"Le temps que vous profitez de gaspiller n'est pas du temps gaspillé.", author:"Bertrand Russell" },
+  { text:"Le moment de commencer est maintenant. Si pas maintenant, alors quand ?", author:"Unknown" },
+  { text:"Soyez plus fort que votre excuse la plus solide.", author:"Unknown" },
 ];
 
 // ════════════════════════════════════════════════════════
@@ -609,13 +536,11 @@ const DashModule = {
   },
 
   renderQuote() {
-    // Same quote all day, changes at midnight — deterministic from date
-    const dayIndex = Math.floor(Date.now() / 86400000);
-    const q = QUOTES[dayIndex % QUOTES.length];
+    const q = QUOTES[Math.floor(Math.random() * QUOTES.length)];
     const t = document.getElementById('quoteText');
     const a = document.getElementById('quoteAuthor');
     if(t) t.textContent = q.text;
-    if(a) a.textContent = `— ${q.author}${q.source ? '  ·  ' + q.source : ''}`;
+    if(a) a.textContent = '— ' + q.author;
   }
 };
 
@@ -1166,586 +1091,110 @@ const TaskModule = {
 // ════════════════════════════════════════════════════════
 const LearningModule = {
   currentSubject: null,
-  currentTab: 'overview',
-  _taskFilter: 'all',
-  _taskSort: 'priority',
 
   init() {
     document.getElementById('subjectSaveBtn').addEventListener('click', () => this.saveSubject());
     document.getElementById('subjectDeleteBtn').addEventListener('click', () => this.deleteSubject());
-    document.getElementById('subjectTaskSaveBtn').addEventListener('click', () => this.saveTask());
-    document.getElementById('subjectTaskDeleteBtn').addEventListener('click', () => this.deleteTask());
-    document.getElementById('subjectResourceSaveBtn').addEventListener('click', () => this.saveResource());
-    document.getElementById('subjectResourceDeleteBtn').addEventListener('click', () => this.deleteResource());
-    document.getElementById('learningSearch')?.addEventListener('input', () => this.renderSubjectsList());
-    document.getElementById('learningFilter')?.addEventListener('change', () => this.renderSubjectsList());
-    document.getElementById('learningSort')?.addEventListener('change', () => this.renderSubjectsList());
-    this.renderGlobalStats();
     this.renderSubjectsList();
   },
 
-  renderGlobalStats() {
-    const subjects = DB.getSubjects();
-    const allTasks = DB.getSubjectTasks();
-    const totalTasks = allTasks.length;
-    const doneTasks = allTasks.filter(t => t.status === 'done').length;
-    const overdueTasks = allTasks.filter(t => t.deadline && t.status !== 'done' && t.deadline < DB.todayStr()).length;
-    const completedSubjects = subjects.filter(s => {
-      const tasks = DB.getTasksForSubject(s.id);
-      return tasks.length > 0 && tasks.every(t => t.status === 'done');
-    }).length;
-    const el = document.getElementById('learningGlobalStats');
-    if (!el) return;
-    if (subjects.length === 0) { el.innerHTML = ''; return; }
-    const globalPct = totalTasks ? Math.round((doneTasks / totalTasks) * 100) : 0;
-    el.innerHTML = `
-      <div class="learning-stat-card">
-        <div class="learning-stat-icon">📚</div>
-        <div><div class="learning-stat-value">${subjects.length}</div><div class="learning-stat-label">Matières</div></div>
-      </div>
-      <div class="learning-stat-card">
-        <div class="learning-stat-icon">✅</div>
-        <div><div class="learning-stat-value">${doneTasks}/${totalTasks}</div><div class="learning-stat-label">Tâches terminées</div></div>
-      </div>
-      <div class="learning-stat-card">
-        <div class="learning-stat-icon">📊</div>
-        <div><div class="learning-stat-value">${globalPct}%</div><div class="learning-stat-label">Progression globale</div></div>
-      </div>
-      ${overdueTasks > 0 ? `<div class="learning-stat-card" style="border-color:rgba(239,68,68,0.3)">
-        <div class="learning-stat-icon">⚠️</div>
-        <div><div class="learning-stat-value" style="color:var(--danger)">${overdueTasks}</div><div class="learning-stat-label">En retard</div></div>
-      </div>` : ''}
-      ${completedSubjects > 0 ? `<div class="learning-stat-card" style="border-color:rgba(34,197,94,0.3)">
-        <div class="learning-stat-icon">🏆</div>
-        <div><div class="learning-stat-value" style="color:var(--success)">${completedSubjects}</div><div class="learning-stat-label">Matières terminées</div></div>
-      </div>` : ''}
-    `;
-  },
-
   renderSubjectsList() {
-    let subjects = DB.getSubjects();
-    const search = (document.getElementById('learningSearch')?.value || '').toLowerCase();
-    const filter = document.getElementById('learningFilter')?.value || 'all';
-    const sort = document.getElementById('learningSort')?.value || 'name';
+    const subjects = DB.getSubjects();
     const el = document.getElementById('subjectsList');
-    if (!el) return;
-    if (subjects.length === 0) {
+    if(!el) return;
+    if(subjects.length === 0) {
       el.innerHTML = `<div class="empty-state large" style="grid-column:1/-1"><div class="empty-icon">📚</div><p>Aucune matière définie. Ajoutez vos premières matières d'apprentissage.</p><button class="btn btn-primary" onclick="LearningModule.openSubjectModal()">Ajouter une matière</button></div>`;
       return;
     }
-    if (search) subjects = subjects.filter(s => s.name.toLowerCase().includes(search));
-    if (filter !== 'all') {
-      subjects = subjects.filter(s => {
-        const tasks = DB.getTasksForSubject(s.id);
-        const done = tasks.filter(t => t.status === 'done').length;
-        const pct = tasks.length ? (done / tasks.length) * 100 : 0;
-        if (filter === 'completed') return tasks.length > 0 && pct === 100;
-        if (filter === 'notstarted') return done === 0;
-        if (filter === 'inprogress') return done > 0 && pct < 100;
-        return true;
-      });
-    }
-    subjects = [...subjects].sort((a, b) => {
-      if (sort === 'name') return a.name.localeCompare(b.name, 'fr');
-      if (sort === 'recent') return new Date(b.createdAt) - new Date(a.createdAt);
-      if (sort === 'progress') return this._getSubjectPct(b.id) - this._getSubjectPct(a.id);
-      return 0;
-    });
-    if (subjects.length === 0) {
-      el.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">🔍</div><p>Aucune matière trouvée avec ces critères.</p></div>`;
-      return;
-    }
     el.innerHTML = subjects.map(s => {
-      const tasks = DB.getTasksForSubject(s.id);
-      const done = tasks.filter(t => t.status === 'done').length;
-      const inprogress = tasks.filter(t => t.status === 'progress').length;
-      const todo = tasks.filter(t => t.status === 'todo').length;
-      const pct = tasks.length ? Math.round((done / tasks.length) * 100) : 0;
-      const isCompleted = tasks.length > 0 && pct === 100;
-      const hasOverdue = tasks.some(t => t.deadline && t.status !== 'done' && t.deadline < DB.todayStr());
-      const color = s.color || 'var(--primary)';
+      const lessons = DB.getLessonsForSubject(s.id);
+      const done = lessons.filter(l=>l.status==='done').length;
+      const pct = lessons.length ? Math.round((done/lessons.length)*100) : 0;
       return `
-        <div class="subject-card${isCompleted ? ' is-completed' : ''}" onclick="LearningModule.showDetail('${s.id}')">
-          ${isCompleted ? `<div class="subject-completed-badge">✓ Terminée</div>` : hasOverdue ? `<div class="subject-overdue-badge">⚠ En retard</div>` : ''}
+        <div class="subject-card" onclick="LearningModule.showDetail('${s.id}')">
           <button class="subject-edit-btn" onclick="event.stopPropagation();LearningModule.openSubjectModal('${s.id}')">
             <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
           </button>
-          <div class="subject-card-top" style="${isCompleted || hasOverdue ? 'margin-top:18px' : ''}">
-            <div class="subject-icon-wrap" style="background:${color}20">${s.icon || '📖'}</div>
+          <div class="subject-card-top">
+            <div class="subject-icon-wrap" style="background:${s.color||'var(--primary)'}20">${s.icon||'📖'}</div>
             <div>
               <div class="subject-name">${Utils.escHtml(s.name)}</div>
-              <div class="subject-level">${Utils.levelLabel(s.level || 'debutant')}</div>
+              <div class="subject-level">${Utils.levelLabel(s.level||'debutant')}</div>
             </div>
           </div>
           <div class="subject-progress">
-            <div class="subject-progress-label"><span>Progression</span><span>${done}/${tasks.length} tâches</span></div>
-            <div class="progress-bar"><div class="progress-fill-animated" style="width:${pct}%;background:${isCompleted ? 'var(--success)' : color}"></div></div>
+            <div class="subject-progress-label"><span>Progression</span><span>${done}/${lessons.length} leçons</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:${pct}%;background:${s.color||'var(--primary)'}"></div></div>
           </div>
-          <div class="subject-task-counts">
-            ${todo > 0 ? `<span class="stc-badge stc-todo">📋 ${todo} à faire</span>` : ''}
-            ${inprogress > 0 ? `<span class="stc-badge stc-progress">⏳ ${inprogress} en cours</span>` : ''}
-            ${done > 0 ? `<span class="stc-badge stc-done">✓ ${done} faites</span>` : ''}
-            ${tasks.length === 0 ? `<span class="stc-badge stc-todo">Aucune tâche</span>` : ''}
+          <div class="subject-meta">
+            <span>${pct}% complété</span>
+            <span style="color:var(--primary);font-weight:600">Voir les leçons →</span>
           </div>
-          <div class="subject-meta" style="margin-top:10px"><span>${pct}% complété</span><span style="color:var(--primary);font-weight:600">Voir →</span></div>
         </div>`;
     }).join('');
   },
 
-  _getSubjectPct(sid) {
-    const tasks = DB.getTasksForSubject(sid);
-    if (!tasks.length) return 0;
-    return Math.round((tasks.filter(t => t.status === 'done').length / tasks.length) * 100);
-  },
-
   showDetail(subjectId) {
-    const s = DB.getSubjects().find(x => x.id === subjectId);
-    if (!s) return;
+    const s = DB.getSubjects().find(x=>x.id===subjectId);
+    if(!s) return;
     this.currentSubject = s;
-    this.currentTab = 'overview';
-    this._taskFilter = 'all';
-    this._taskSort = 'priority';
-    this._renderDetailView();
-  },
-
-  _renderDetailView() {
-    const s = this.currentSubject;
-    if (!s) return;
+    const lessons = DB.getLessonsForSubject(s.id);
     const el = document.getElementById('learningContent');
-    if (!el) return;
-    const tasks = DB.getTasksForSubject(s.id);
-    const resources = DB.getResourcesForSubject(s.id);
-    const done = tasks.filter(t => t.status === 'done').length;
-    const inprogress = tasks.filter(t => t.status === 'progress').length;
-    const pct = tasks.length ? Math.round((done / tasks.length) * 100) : 0;
-    const color = s.color || 'var(--primary)';
+    if(!el) return;
     el.innerHTML = `
       <div>
         <div class="back-btn" onclick="LearningModule.backToList()">
           <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg> Retour aux matières
         </div>
-        <div class="subject-detail-header">
-          <div class="subject-icon-wrap" style="background:${color}20;width:54px;height:54px;font-size:28px">${s.icon || '📖'}</div>
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px">
+          <div class="subject-icon-wrap" style="background:${s.color||'var(--primary)'}20;width:52px;height:52px;font-size:26px">${s.icon||'📖'}</div>
           <div>
-            <h2 style="font-size:20px;font-weight:800">${Utils.escHtml(s.name)}</h2>
-            <p style="color:var(--text-secondary);font-size:13px">${Utils.levelLabel(s.level)} • ${Utils.escHtml(s.objective || 'Aucun objectif défini')}</p>
+            <h2 style="font-size:20px;font-weight:700">${Utils.escHtml(s.name)}</h2>
+            <p style="color:var(--text-secondary);font-size:13px">${Utils.levelLabel(s.level)} • ${s.objective||'Aucun objectif défini'}</p>
           </div>
-          <div class="subject-detail-actions">
-            <button class="btn btn-secondary btn-sm" onclick="LearningModule.openSubjectModal('${s.id}')">✏️ Modifier</button>
-            <button class="btn btn-primary" onclick="LearningModule.openTaskModal()">+ Tâche</button>
-            <button class="btn btn-secondary" onclick="LearningModule.openResourceModal()">+ Ressource</button>
-          </div>
+          <button class="btn btn-primary" style="margin-left:auto" onclick="LearningModule.openLessonModal()">+ Nouvelle leçon</button>
         </div>
-        <div class="subject-detail-stats">
-          <div class="sds-card"><div class="sds-value">${tasks.length}</div><div class="sds-label">Tâches totales</div></div>
-          <div class="sds-card"><div class="sds-value" style="color:var(--success)">${done}</div><div class="sds-label">Terminées</div></div>
-          <div class="sds-card"><div class="sds-value" style="color:var(--warning)">${inprogress}</div><div class="sds-label">En cours</div></div>
-          <div class="sds-card"><div class="sds-value" style="color:${color}">${pct}%</div><div class="sds-label">Progression</div></div>
-          <div class="sds-card"><div class="sds-value" style="color:var(--info)">${resources.length}</div><div class="sds-label">Ressources</div></div>
-        </div>
-        <div class="progress-bar" style="height:8px;margin-bottom:24px">
-          <div class="progress-fill-animated" style="width:${pct}%;background:${pct === 100 ? 'var(--success)' : color}"></div>
-        </div>
-        <div class="learning-tabs" id="learningTabsBar">
-          <button class="ltab ${this.currentTab === 'overview' ? 'active' : ''}" onclick="LearningModule.switchTab('overview')">Vue d'ensemble</button>
-          <button class="ltab ${this.currentTab === 'tasks' ? 'active' : ''}" onclick="LearningModule.switchTab('tasks')">Tâches <span class="ltab-badge">${tasks.length}</span></button>
-          <button class="ltab ${this.currentTab === 'resources' ? 'active' : ''}" onclick="LearningModule.switchTab('resources')">Ressources <span class="ltab-badge">${resources.length}</span></button>
-          <button class="ltab ${this.currentTab === 'notes' ? 'active' : ''}" onclick="LearningModule.switchTab('notes')">Notes</button>
-        </div>
-        <div id="learningTabContent">${this._renderTabContent()}</div>
-      </div>`;
-  },
-
-  switchTab(tab) {
-    this.currentTab = tab;
-    const tc = document.getElementById('learningTabContent');
-    if (tc) tc.innerHTML = this._renderTabContent();
-    document.querySelectorAll('#learningTabsBar .ltab').forEach((t, i) => {
-      t.classList.toggle('active', ['overview','tasks','resources','notes'][i] === tab);
-    });
-  },
-
-  _renderTabContent() {
-    switch (this.currentTab) {
-      case 'overview': return this._renderOverviewTab();
-      case 'tasks': return this._renderTasksTab();
-      case 'resources': return this._renderResourcesTab();
-      case 'notes': return this._renderNotesTab();
-      default: return this._renderOverviewTab();
-    }
-  },
-
-  _renderOverviewTab() {
-    const s = this.currentSubject;
-    const tasks = DB.getTasksForSubject(s.id);
-    const resources = DB.getResourcesForSubject(s.id);
-    const overdue = tasks.filter(t => t.deadline && t.status !== 'done' && t.deadline < DB.todayStr());
-    const priorityOrder = { high: 0, medium: 1, low: 2 };
-    const recentTasks = [...tasks].filter(t => t.status !== 'done').sort((a, b) => (priorityOrder[a.priority] || 1) - (priorityOrder[b.priority] || 1)).slice(0, 5);
-    const categories = {};
-    tasks.forEach(t => {
-      if (!categories[t.category]) categories[t.category] = { total: 0, done: 0 };
-      categories[t.category].total++;
-      if (t.status === 'done') categories[t.category].done++;
-    });
-    const recentResources = resources.slice(-3).reverse();
-    return `
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px" class="ov-grid">
-        <div>
-          ${overdue.length > 0 ? `<div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:var(--radius);padding:14px;margin-bottom:16px">
-            <div style="font-size:13px;font-weight:700;color:var(--danger);margin-bottom:8px">⚠️ ${overdue.length} tâche(s) en retard</div>
-            ${overdue.slice(0, 3).map(t => `<div style="font-size:12px;color:var(--text-secondary);padding:4px 0;border-bottom:1px solid var(--border)">${Utils.escHtml(t.title)} — <span style="color:var(--danger)">${Utils.formatDateShort(t.deadline)}</span></div>`).join('')}
-          </div>` : ''}
-          <div style="font-size:13px;font-weight:700;margin-bottom:12px">Prochaines tâches prioritaires</div>
-          ${recentTasks.length === 0 ? `<div style="color:var(--text-muted);font-size:13px;padding:12px 0">🎉 Toutes les tâches sont terminées !</div>` :
-            recentTasks.map(t => {
-              const isOv = t.deadline && t.deadline < DB.todayStr();
-              const pc = { high: 'var(--danger)', medium: 'var(--warning)', low: 'var(--success)' }[t.priority] || 'var(--border)';
-              return `<div style="display:flex;align-items:center;gap:8px;padding:8px;margin-bottom:6px;background:var(--bg-card);border:1px solid var(--glass-border);border-left:3px solid ${pc};border-radius:var(--radius-sm)">
-                <div style="flex:1;min-width:0">
-                  <div style="font-size:12px;font-weight:600;color:var(--text-primary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${Utils.escHtml(t.title)}</div>
-                  <div style="font-size:10px;color:${isOv ? 'var(--danger)' : 'var(--text-muted)'}">${t.deadline ? (isOv ? '⚠️ ' : '') + Utils.formatDateShort(t.deadline) : t.category}</div>
-                </div>
-                <span class="task-badge task-badge-cat" style="font-size:9px">${t.category}</span>
-              </div>`;
-            }).join('')}
-        </div>
-        <div>
-          <div style="font-size:13px;font-weight:700;margin-bottom:12px">Répartition par catégorie</div>
-          ${Object.entries(categories).length === 0 ? `<div style="color:var(--text-muted);font-size:13px">Aucune tâche pour l'instant.</div>` :
-            Object.entries(categories).map(([cat, data]) => `
-              <div style="margin-bottom:10px">
-                <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span style="color:var(--text-secondary)">${cat}</span><span style="color:var(--text-muted)">${data.done}/${data.total}</span></div>
-                <div class="progress-bar" style="height:5px"><div class="progress-fill" style="width:${data.total ? Math.round(data.done / data.total * 100) : 0}%;background:var(--primary)"></div></div>
-              </div>`).join('')}
-          ${recentResources.length > 0 ? `
-            <div style="font-size:13px;font-weight:700;margin:16px 0 12px">Ressources récentes</div>
-            ${recentResources.map(r => `
-              <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border)">
-                <span style="font-size:16px">${this._resourceTypeIcon(r.type)}</span>
-                <div style="flex:1;min-width:0">
-                  <div style="font-size:12px;font-weight:600;color:var(--text-primary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${Utils.escHtml(r.title)}</div>
-                  <div style="font-size:11px;color:var(--text-muted)">${r.type}</div>
-                </div>
-                ${r.link ? `<a href="${Utils.escHtml(r.link)}" target="_blank" class="resource-link" style="font-size:11px">↗</a>` : ''}
-              </div>`).join('')}
-          ` : ''}
-        </div>
-      </div>
-      <style>.ov-grid{} @media(max-width:768px){.ov-grid{grid-template-columns:1fr!important}}</style>`;
-  },
-
-  _renderTasksTab() {
-    const tasks = DB.getTasksForSubject(this.currentSubject.id);
-    const filter = this._taskFilter || 'all';
-    const sort = this._taskSort || 'priority';
-    let filtered = filter === 'all' ? tasks :
-      filter === 'todo' ? tasks.filter(t => t.status === 'todo') :
-      filter === 'progress' ? tasks.filter(t => t.status === 'progress') :
-      filter === 'done' ? tasks.filter(t => t.status === 'done') :
-      tasks.filter(t => t.deadline && t.status !== 'done' && t.deadline < DB.todayStr());
-    const priorityOrder = { high: 0, medium: 1, low: 2 };
-    filtered = [...filtered].sort((a, b) => {
-      if (sort === 'priority') return (priorityOrder[a.priority] || 1) - (priorityOrder[b.priority] || 1);
-      if (sort === 'deadline') { if (!a.deadline) return 1; if (!b.deadline) return -1; return a.deadline.localeCompare(b.deadline); }
-      if (sort === 'category') return (a.category || '').localeCompare(b.category || '');
-      if (sort === 'recent') return new Date(b.createdAt) - new Date(a.createdAt);
-      return 0;
-    });
-    const overdueCount = tasks.filter(t => t.deadline && t.status !== 'done' && t.deadline < DB.todayStr()).length;
-    return `
-      <div class="tasks-toolbar">
-        <select class="form-input" style="width:auto;padding:6px 10px;font-size:12px" onchange="LearningModule._taskFilter=this.value;LearningModule.switchTab('tasks')">
-          <option value="all" ${filter === 'all' ? 'selected' : ''}>Toutes (${tasks.length})</option>
-          <option value="todo" ${filter === 'todo' ? 'selected' : ''}>À faire (${tasks.filter(t => t.status === 'todo').length})</option>
-          <option value="progress" ${filter === 'progress' ? 'selected' : ''}>En cours (${tasks.filter(t => t.status === 'progress').length})</option>
-          <option value="done" ${filter === 'done' ? 'selected' : ''}>Terminées (${tasks.filter(t => t.status === 'done').length})</option>
-          ${overdueCount > 0 ? `<option value="overdue" ${filter === 'overdue' ? 'selected' : ''}>En retard (${overdueCount})</option>` : ''}
-        </select>
-        <select class="form-input" style="width:auto;padding:6px 10px;font-size:12px" onchange="LearningModule._taskSort=this.value;LearningModule.switchTab('tasks')">
-          <option value="priority" ${sort === 'priority' ? 'selected' : ''}>Par priorité</option>
-          <option value="deadline" ${sort === 'deadline' ? 'selected' : ''}>Par date limite</option>
-          <option value="category" ${sort === 'category' ? 'selected' : ''}>Par catégorie</option>
-          <option value="recent" ${sort === 'recent' ? 'selected' : ''}>Plus récentes</option>
-        </select>
-        <button class="btn btn-primary" style="margin-left:auto" onclick="LearningModule.openTaskModal()">+ Nouvelle tâche</button>
-      </div>
-      ${filtered.length === 0 ? `<div class="learning-empty"><div class="learning-empty-icon">📋</div><p>${tasks.length === 0 ? 'Aucune tâche pour cette matière.' : 'Aucune tâche correspondant au filtre.'}</p>${tasks.length === 0 ? `<button class="btn btn-primary" onclick="LearningModule.openTaskModal()">Ajouter une tâche</button>` : ''}</div>` :
-        `<div class="tasks-list">${filtered.map(t => this._renderTaskCard(t)).join('')}</div>`}`;
-  },
-
-  _renderTaskCard(t) {
-    const isOverdue = t.deadline && t.status !== 'done' && t.deadline < DB.todayStr();
-    const priorityBadge = { high: 'task-badge-pri-high', medium: 'task-badge-pri-medium', low: 'task-badge-pri-low' }[t.priority] || 'task-badge-pri-medium';
-    const priorityLabel = { high: 'Haute', medium: 'Moyenne', low: 'Basse' }[t.priority] || 'Moyenne';
-    const isDone = t.status === 'done';
-    return `
-      <div class="task-card-lrn priority-${t.priority} status-${t.status}" id="tcard-${t.id}">
-        <button class="task-check-btn ${isDone ? 'checked' : ''}" onclick="LearningModule.toggleTaskDone('${t.id}')">
-          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-        </button>
-        <div class="task-card-body">
-          <div class="task-card-title-lrn">${Utils.escHtml(t.title)}</div>
-          ${t.description ? `<div class="task-card-desc">${Utils.escHtml(t.description)}</div>` : ''}
-          <div class="task-card-meta">
-            <span class="task-badge task-badge-cat">${t.category}</span>
-            <span class="task-badge ${priorityBadge}">${priorityLabel}</span>
-            ${t.deadline ? `<span class="task-deadline ${isOverdue ? 'overdue' : ''}">
-              <svg viewBox="0 0 24 24" style="width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              ${isOverdue ? '⚠ ' : ''}${Utils.formatDateShort(t.deadline)}
-            </span>` : ''}
-            ${t.link ? `<a href="${Utils.escHtml(t.link)}" target="_blank" class="resource-link" style="font-size:11px">🔗 Lien</a>` : ''}
-          </div>
-        </div>
-        <div class="task-card-actions">
-          <button class="task-action-btn" onclick="LearningModule.openTaskModal('${t.id}')" title="Modifier">
-            <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-          </button>
+        <div class="lessons-list" id="lessonsList">
+          ${lessons.length===0 ? `<div class="empty-state"><div class="empty-icon">📝</div><p>Aucune leçon pour cette matière</p><button class="btn btn-primary" onclick="LearningModule.openLessonModal()">Ajouter une leçon</button></div>` :
+          lessons.map(l=>`
+            <div class="lesson-item">
+              <div class="lesson-status-dot status-${l.status||'todo'}"></div>
+              <div style="flex:1">
+                <div class="lesson-title">${Utils.escHtml(l.title)}</div>
+                ${l.summary ? `<div style="font-size:12px;color:var(--text-secondary);margin-top:2px">${Utils.escHtml(l.summary)}</div>` : ''}
+              </div>
+              <div class="lesson-meta">${l.duration?l.duration+'min':''}</div>
+              <select class="form-input lesson-status-select" style="max-width:120px;width:100%;padding:5px 8px;font-size:12px;flex-shrink:0" onchange="LearningModule.updateLessonStatus('${l.id}',this.value)">
+                <option value="todo" ${l.status==='todo'?'selected':''}>À faire</option>
+                <option value="progress" ${l.status==='progress'?'selected':''}>En cours</option>
+                <option value="done" ${l.status==='done'?'selected':''}>Terminé</option>
+              </select>
+              <button class="task-action-btn" onclick="LearningModule.deleteLesson('${l.id}')" style="color:var(--danger)">
+                <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M9 6V4h6v2"/></svg>
+              </button>
+            </div>`).join('')}
         </div>
       </div>`;
-  },
-
-  _renderResourcesTab() {
-    const resources = DB.getResourcesForSubject(this.currentSubject.id);
-    return `
-      <div style="display:flex;justify-content:flex-end;margin-bottom:16px">
-        <button class="btn btn-primary" onclick="LearningModule.openResourceModal()">+ Nouvelle ressource</button>
-      </div>
-      ${resources.length === 0 ? `<div class="learning-empty"><div class="learning-empty-icon">📎</div><p>Aucune ressource pour cette matière.</p><button class="btn btn-primary" onclick="LearningModule.openResourceModal()">Ajouter une ressource</button></div>` :
-        `<div class="resources-grid">${resources.map(r => this._renderResourceCard(r)).join('')}</div>`}`;
-  },
-
-  _renderResourceCard(r) {
-    return `
-      <div class="resource-card">
-        <div class="resource-card-header">
-          <div class="resource-type-icon">${this._resourceTypeIcon(r.type)}</div>
-          <div style="flex:1;min-width:0">
-            <div class="resource-title">${Utils.escHtml(r.title)}</div>
-            <span class="resource-type-badge">${r.type}</span>
-          </div>
-        </div>
-        ${r.description ? `<div class="resource-desc">${Utils.escHtml(r.description)}</div>` : ''}
-        ${r.link ? `<a href="${Utils.escHtml(r.link)}" target="_blank" class="resource-link">
-          <svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          Ouvrir le lien
-        </a>` : ''}
-        <div class="resource-actions">
-          <button class="task-action-btn" onclick="LearningModule.openResourceModal('${r.id}')" title="Modifier">
-            <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-          </button>
-          <button class="task-action-btn" onclick="LearningModule.deleteResource('${r.id}')" style="color:var(--danger)" title="Supprimer">
-            <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M9 6V4h6v2"/></svg>
-          </button>
-        </div>
-      </div>`;
-  },
-
-  _renderNotesTab() {
-    const note = DB.getSubjectNote(this.currentSubject.id);
-    return `
-      <div class="subject-notes-area">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-          <div style="font-size:14px;font-weight:700">Notes personnelles</div>
-          <button class="btn btn-primary btn-sm" onclick="LearningModule.saveNote()">💾 Sauvegarder</button>
-        </div>
-        <textarea id="subjectNotesArea" class="form-textarea" rows="12" placeholder="Rédigez vos notes, résumés, points importants pour cette matière...">${Utils.escHtml(note)}</textarea>
-        <div style="font-size:11px;color:var(--text-muted);margin-top:8px">Conseil : Notez vos résumés, formules importantes, points à retenir...</div>
-      </div>`;
-  },
-
-  _resourceTypeIcon(type) {
-    return { 'Cours': '📚', 'PDF': '📄', 'Vidéo YouTube': '🎬', 'Note': '📝', 'Document': '📋', 'Exercice': '✏️', 'Chapitre': '📖' }[type] || '📎';
   },
 
   backToList() {
     this.currentSubject = null;
-    this.currentTab = 'overview';
-    this._taskFilter = 'all';
-    this._taskSort = 'priority';
     const el = document.getElementById('learningContent');
-    if (el) el.innerHTML = '<div id="subjectsList" class="subjects-grid"></div>';
+    el.innerHTML = '<div id="subjectsList" class="subjects-grid"></div>';
     this.renderSubjectsList();
-    this.renderGlobalStats();
   },
 
-  // ── TASK ACTIONS ──
-
-  openTaskModal(id = null) {
-    if (!this.currentSubject) return;
-    if (id) {
-      const t = DB.getSubjectTasks().find(x => x.id === id);
-      if (!t) return;
-      document.getElementById('subjectTaskModalTitle').textContent = 'Modifier la tâche';
-      document.getElementById('subjectTaskId').value = t.id;
-      document.getElementById('subjectTaskSubjectId').value = t.subjectId;
-      document.getElementById('subjectTaskTitle').value = t.title;
-      document.getElementById('subjectTaskCategory').value = t.category || 'Cours';
-      document.getElementById('subjectTaskPriority').value = t.priority || 'medium';
-      document.getElementById('subjectTaskDescription').value = t.description || '';
-      document.getElementById('subjectTaskDeadline').value = t.deadline || '';
-      document.getElementById('subjectTaskStatus').value = t.status || 'todo';
-      document.getElementById('subjectTaskLink').value = t.link || '';
-      document.getElementById('subjectTaskDeleteBtn').classList.remove('hidden');
-    } else {
-      document.getElementById('subjectTaskModalTitle').textContent = 'Nouvelle tâche';
-      document.getElementById('subjectTaskId').value = '';
-      document.getElementById('subjectTaskSubjectId').value = this.currentSubject.id;
-      document.getElementById('subjectTaskTitle').value = '';
-      document.getElementById('subjectTaskCategory').value = 'Cours';
-      document.getElementById('subjectTaskPriority').value = 'medium';
-      document.getElementById('subjectTaskDescription').value = '';
-      document.getElementById('subjectTaskDeadline').value = '';
-      document.getElementById('subjectTaskStatus').value = 'todo';
-      document.getElementById('subjectTaskLink').value = '';
-      document.getElementById('subjectTaskDeleteBtn').classList.add('hidden');
-    }
-    Modal.open('subjectTaskModal');
-  },
-
-  saveTask() {
-    const title = document.getElementById('subjectTaskTitle').value.trim();
-    if (!title) { Toast.show('Le titre est requis', 'error'); return; }
-    const id = document.getElementById('subjectTaskId').value;
-    const task = {
-      id: id || DB.generateId(),
-      subjectId: document.getElementById('subjectTaskSubjectId').value,
-      title,
-      category: document.getElementById('subjectTaskCategory').value,
-      priority: document.getElementById('subjectTaskPriority').value,
-      description: document.getElementById('subjectTaskDescription').value.trim(),
-      deadline: document.getElementById('subjectTaskDeadline').value,
-      status: document.getElementById('subjectTaskStatus').value,
-      link: document.getElementById('subjectTaskLink').value.trim(),
-      createdAt: id ? (DB.getSubjectTasks().find(x => x.id === id)?.createdAt || new Date().toISOString()) : new Date().toISOString(),
-    };
-    if (id) DB.updateSubjectTask(task); else DB.addSubjectTask(task);
-    Modal.close('subjectTaskModal');
-    Toast.show(id ? 'Tâche modifiée' : 'Tâche ajoutée', 'success');
-    this.currentTab = 'tasks';
-    this._renderDetailView();
-  },
-
-  deleteTask() {
-    const id = document.getElementById('subjectTaskId').value;
-    if (!id) return;
-    if (confirm('Supprimer cette tâche ?')) {
-      DB.deleteSubjectTask(id);
-      Modal.close('subjectTaskModal');
-      Toast.show('Tâche supprimée', 'info');
-      this._renderDetailView();
-    }
-  },
-
-  toggleTaskDone(id) {
-    const tasks = DB.getSubjectTasks();
-    const t = tasks.find(x => x.id === id);
-    if (!t) return;
-    const wasDone = t.status === 'done';
-    t.status = wasDone ? 'todo' : 'done';
-    if (!wasDone) t.completedAt = new Date().toISOString();
-    DB.updateSubjectTask(t);
-    if (!wasDone) {
-      const card = document.getElementById(`tcard-${id}`);
-      if (card) {
-        card.querySelector('.task-check-btn')?.classList.add('checked');
-        card.classList.add('task-complete-pulse');
-      }
-      const allTasks = DB.getTasksForSubject(this.currentSubject.id);
-      const allDone = allTasks.every(x => x.status === 'done');
-      const msgs = ['Excellent travail ! 🌟', 'Bravo ! Continue comme ça ! 💪', 'Super boulot ! 🎯', 'Well done ! 🏆', 'Parfait ! Tu avances ! 🚀'];
-      setTimeout(() => {
-        if (allDone && allTasks.length > 0) {
-          Celebration.show(`🏆 ${this.currentSubject.name} terminée !`, 'Toutes les tâches sont complètes ! Excellent travail !', true);
-        } else {
-          Celebration.show(msgs[Math.floor(Math.random() * msgs.length)], `"${t.title.slice(0, 40)}" est terminée !`, false);
-        }
-        this._renderDetailView();
-        this.renderGlobalStats();
-      }, 400);
-    } else {
-      this._renderDetailView();
-      this.renderGlobalStats();
-    }
-  },
-
-  // ── RESOURCE ACTIONS ──
-
-  openResourceModal(id = null) {
-    if (!this.currentSubject) return;
-    if (id) {
-      const r = DB.getSubjectResources().find(x => x.id === id);
-      if (!r) return;
-      document.getElementById('subjectResourceModalTitle').textContent = 'Modifier la ressource';
-      document.getElementById('subjectResourceId').value = r.id;
-      document.getElementById('subjectResourceSubjectId').value = r.subjectId;
-      document.getElementById('subjectResourceTitle').value = r.title;
-      document.getElementById('subjectResourceType').value = r.type || 'Cours';
-      document.getElementById('subjectResourceLink').value = r.link || '';
-      document.getElementById('subjectResourceDescription').value = r.description || '';
-      document.getElementById('subjectResourceDeleteBtn').classList.remove('hidden');
-    } else {
-      document.getElementById('subjectResourceModalTitle').textContent = 'Nouvelle ressource';
-      document.getElementById('subjectResourceId').value = '';
-      document.getElementById('subjectResourceSubjectId').value = this.currentSubject.id;
-      document.getElementById('subjectResourceTitle').value = '';
-      document.getElementById('subjectResourceType').value = 'Cours';
-      document.getElementById('subjectResourceLink').value = '';
-      document.getElementById('subjectResourceDescription').value = '';
-      document.getElementById('subjectResourceDeleteBtn').classList.add('hidden');
-    }
-    Modal.open('subjectResourceModal');
-  },
-
-  saveResource() {
-    const title = document.getElementById('subjectResourceTitle').value.trim();
-    if (!title) { Toast.show('Le titre est requis', 'error'); return; }
-    const id = document.getElementById('subjectResourceId').value;
-    const resource = {
-      id: id || DB.generateId(),
-      subjectId: document.getElementById('subjectResourceSubjectId').value,
-      title,
-      type: document.getElementById('subjectResourceType').value,
-      link: document.getElementById('subjectResourceLink').value.trim(),
-      description: document.getElementById('subjectResourceDescription').value.trim(),
-      createdAt: id ? (DB.getSubjectResources().find(x => x.id === id)?.createdAt || new Date().toISOString()) : new Date().toISOString(),
-    };
-    if (id) DB.updateSubjectResource(resource); else DB.addSubjectResource(resource);
-    Modal.close('subjectResourceModal');
-    Toast.show(id ? 'Ressource modifiée' : 'Ressource ajoutée', 'success');
-    this.currentTab = 'resources';
-    this._renderDetailView();
-  },
-
-  deleteResource(id) {
-    if (confirm('Supprimer cette ressource ?')) {
-      DB.deleteSubjectResource(id);
-      Toast.show('Ressource supprimée', 'info');
-      const tc = document.getElementById('learningTabContent');
-      if (tc) tc.innerHTML = this._renderResourcesTab();
-      this.renderGlobalStats();
-    }
-  },
-
-  saveNote() {
-    const text = document.getElementById('subjectNotesArea')?.value || '';
-    DB.saveSubjectNote(this.currentSubject.id, text);
-    Toast.show('Notes sauvegardées', 'success');
-  },
-
-  // ── SUBJECT MODAL ──
-
-  openSubjectModal(id = null) {
-    if (id) {
-      const s = DB.getSubjects().find(x => x.id === id);
-      if (!s) return;
+  openSubjectModal(id=null) {
+    if(id) {
+      const s = DB.getSubjects().find(x=>x.id===id);
+      if(!s) return;
       document.getElementById('subjectModalTitle').textContent = 'Modifier la matière';
       document.getElementById('subjectId').value = s.id;
       document.getElementById('subjectName').value = s.name;
-      document.getElementById('subjectIcon').value = s.icon || '';
-      document.getElementById('subjectColor').value = s.color || '#6366f1';
-      document.getElementById('subjectLevel').value = s.level || 'debutant';
-      document.getElementById('subjectObjective').value = s.objective || '';
+      document.getElementById('subjectIcon').value = s.icon||'';
+      document.getElementById('subjectColor').value = s.color||'#6366f1';
+      document.getElementById('subjectLevel').value = s.level||'debutant';
+      document.getElementById('subjectObjective').value = s.objective||'';
       document.getElementById('subjectDeleteBtn').classList.remove('hidden');
     } else {
       document.getElementById('subjectModalTitle').textContent = 'Nouvelle matière';
@@ -1762,38 +1211,65 @@ const LearningModule = {
 
   saveSubject() {
     const name = document.getElementById('subjectName').value.trim();
-    if (!name) { Toast.show('Le nom est requis', 'error'); return; }
+    if(!name) { Toast.show('Le nom est requis','error'); return; }
     const id = document.getElementById('subjectId').value;
     const s = {
-      id: id || DB.generateId(), name,
-      icon: document.getElementById('subjectIcon').value || '📖',
+      id: id||DB.generateId(), name,
+      icon: document.getElementById('subjectIcon').value||'📖',
       color: document.getElementById('subjectColor').value,
       level: document.getElementById('subjectLevel').value,
       objective: document.getElementById('subjectObjective').value,
       createdAt: new Date().toISOString(),
     };
-    if (id) DB.updateSubject(s); else DB.addSubject(s);
+    if(id) DB.updateSubject(s); else DB.addSubject(s);
     Modal.close('subjectModal');
-    Toast.show(id ? 'Matière modifiée' : 'Matière ajoutée', 'success');
-    if (this.currentSubject && this.currentSubject.id === id) {
-      this.currentSubject = s;
-      this._renderDetailView();
-    } else {
-      this.backToList();
-    }
-    this.renderGlobalStats();
+    Toast.show(id?'Matière modifiée':'Matière ajoutée','success');
+    this.renderSubjectsList();
   },
 
   deleteSubject() {
     const id = document.getElementById('subjectId').value;
-    if (!id) return;
-    if (confirm('Supprimer cette matière et toutes ses tâches/ressources/notes ?')) {
+    if(!id) return;
+    if(confirm('Supprimer cette matière et toutes ses leçons ?')) {
       DB.deleteSubject(id);
       Modal.close('subjectModal');
-      Toast.show('Matière supprimée', 'info');
-      this.backToList();
+      Toast.show('Matière supprimée','info');
+      this.renderSubjectsList();
     }
   },
+
+  openLessonModal() {
+    if(!this.currentSubject) return;
+    const title = prompt('Titre de la leçon:');
+    if(!title?.trim()) return;
+    const summary = prompt('Résumé (optionnel):');
+    const duration = prompt('Durée estimée (minutes):');
+    DB.addLesson({
+      id: DB.generateId(),
+      subjectId: this.currentSubject.id,
+      title: title.trim(),
+      summary: summary||'',
+      duration: parseInt(duration)||0,
+      status: 'todo',
+      createdAt: new Date().toISOString(),
+    });
+    this.showDetail(this.currentSubject.id);
+    Toast.show('Leçon ajoutée','success');
+  },
+
+  updateLessonStatus(id, status) {
+    const lessons = DB.getLessons();
+    const l = lessons.find(x=>x.id===id);
+    if(l) { l.status=status; DB.updateLesson(l); }
+    if(this.currentSubject) this.showDetail(this.currentSubject.id);
+  },
+
+  deleteLesson(id) {
+    if(confirm('Supprimer cette leçon ?')) {
+      DB.deleteLesson(id);
+      if(this.currentSubject) this.showDetail(this.currentSubject.id);
+    }
+  }
 };
 
 // ════════════════════════════════════════════════════════
@@ -4194,20 +3670,12 @@ const App = {
     if(sidebarName) sidebarName.textContent = s.name||'Badr';
     if(sidebarAvatar) sidebarAvatar.textContent = s.avatar||'B';
 
-    // Init modules
+    // Init modules (each wrapped so one failure doesn't break navigation)
     startClock();
-    CalModule.init();
-    TaskModule.init();
-    LearningModule.init();
-    HabitModule.init();
-    GoalModule.init();
-    NotesModule.init();
-    StatsModule.init();
-    SettingsModule.init();
-    PomodoroModule.init();
-    LangModule.init();
-    FinanceModule.init();
-    DashModule.render();
+    [CalModule, TaskModule, LearningModule, HabitModule, GoalModule,
+     NotesModule, StatsModule, SettingsModule, PomodoroModule, LangModule,
+     FinanceModule].forEach(m => { try { m.init(); } catch(e) { console.error('Module init error:', e); } });
+    try { DashModule.render(); } catch(e) { console.error('DashModule render error:', e); }
 
     // Navigation (sidebar + mobile bottom nav)
     document.querySelectorAll('.nav-item[data-page], .mob-nav-item[data-page]').forEach(item => {
