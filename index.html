@@ -295,24 +295,6 @@
           <h1 class="page-heading">Apprentissage</h1>
           <button class="btn btn-primary" onclick="LearningModule.openSubjectModal()">+ Nouvelle matière</button>
         </div>
-        <div class="learning-global-stats" id="learningGlobalStats"></div>
-        <div class="learning-toolbar">
-          <div class="search-wrap">
-            <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-            <input type="text" id="learningSearch" class="form-input search-input" placeholder="Rechercher une matière...">
-          </div>
-          <select class="form-input" id="learningFilter" style="width:auto">
-            <option value="all">Toutes les matières</option>
-            <option value="inprogress">En cours</option>
-            <option value="completed">Terminées (100%)</option>
-            <option value="notstarted">Non commencées</option>
-          </select>
-          <select class="form-input" id="learningSort" style="width:auto">
-            <option value="name">Trier par nom</option>
-            <option value="progress">Trier par progression</option>
-            <option value="recent">Plus récentes</option>
-          </select>
-        </div>
         <div id="learningContent">
           <div id="subjectsList" class="subjects-grid"></div>
         </div>
@@ -700,7 +682,7 @@
           <div class="about-hero-info">
             <h1 class="about-name">Badreddine Madad</h1>
             <p class="about-title">BSc Computer Science Student &nbsp;·&nbsp; University of Namur</p>
-            <p class="about-desc">I am a computer science student passionate about building practical tools and software systems. I enjoy developing applications that improve productivity, learning, and personal organization.<br><br>This website (<strong>LifeOS</strong>) is a personal project designed to manage daily life, productivity, finances, and learning in one unified system.</p>
+            <p class="about-desc">Bachelor's student in Computer Science at the University of Namur, currently looking for an internship to further develop my technical skills in a stimulating professional environment. I am particularly interested in computer systems architecture and cybersecurity, a field in which I plan to pursue a master's degree.<br><br>Through academic and personal projects, I have built a solid foundation in software development, databases, modeling, and web applications. Curious, rigorous, and quick to learn, I adapt easily to new tools, technologies, and technical environments.</p>
             <div class="about-meta-row">
               <span class="about-meta-badge"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> Namur, Belgium</span>
               <span class="about-meta-badge available"><span class="about-pulse"></span> Open to opportunities</span>
@@ -711,11 +693,11 @@
               <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
               <span>Email</span>
             </a>
-            <a class="about-social-btn" href="https://www.linkedin.com/in/badreddine-madad-b18a81299/" target="_blank" rel="noopener" title="LinkedIn">
+            <a class="about-social-btn" href="https://linkedin.com/in/BadreddineMADAD" target="_blank" rel="noopener" title="LinkedIn">
               <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
               <span>LinkedIn</span>
             </a>
-            <a class="about-social-btn" href="https://github.com/badreddinemadad05" target="_blank" rel="noopener" title="GitHub">
+            <a class="about-social-btn" href="https://github.com/badreddinemadad05?tab=repositories" target="_blank" rel="noopener" title="GitHub">
               <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
               <span>GitHub</span>
             </a>
@@ -755,8 +737,11 @@
                     <span class="about-badge course">Python</span>
                     <span class="about-badge course">Java</span>
                     <span class="about-badge course">C</span>
+                    <span class="about-badge course">Rust</span>
                     <span class="about-badge course">Algorithms & Data Structures</span>
                     <span class="about-badge course">OOP</span>
+                    <span class="about-badge course">Databases</span>
+                    <span class="about-badge course">Modeling</span>
                   </div>
                 </div>
               </div>
@@ -836,14 +821,8 @@
                   <span class="about-badge lang-java">Java</span>
                   <span class="about-badge lang-c">C</span>
                   <span class="about-badge lang-rust">Rust</span>
-                </div>
-              </div>
-              <div class="about-skills-group">
-                <div class="about-skills-label">Computer Science</div>
-                <div class="about-badges-wrap">
-                  <span class="about-badge cs">Algorithms</span>
-                  <span class="about-badge cs">Data Structures</span>
-                  <span class="about-badge cs">OOP</span>
+                  <span class="about-badge web">JavaScript</span>
+                  <span class="about-badge cs">SQL</span>
                 </div>
               </div>
               <div class="about-skills-group">
@@ -852,15 +831,44 @@
                   <span class="about-badge web">HTML5</span>
                   <span class="about-badge web">CSS3</span>
                   <span class="about-badge web">JavaScript</span>
+                  <span class="about-badge web">FastAPI</span>
                 </div>
               </div>
               <div class="about-skills-group">
-                <div class="about-skills-label">Soft Skills</div>
+                <div class="about-skills-label">Databases</div>
                 <div class="about-badges-wrap">
-                  <span class="about-badge soft">Hard-working</span>
-                  <span class="about-badge soft">Eye for detail</span>
-                  <span class="about-badge soft">Motivator</span>
-                  <span class="about-badge soft">Leader</span>
+                  <span class="about-badge cs">MySQL</span>
+                  <span class="about-badge cs">SQLite</span>
+                </div>
+              </div>
+              <div class="about-skills-group">
+                <div class="about-skills-label">Tools</div>
+                <div class="about-badges-wrap">
+                  <span class="about-badge soft">Docker</span>
+                  <span class="about-badge soft">Git</span>
+                  <span class="about-badge soft">Rodin</span>
+                  <span class="about-badge soft">Event-B</span>
+                  <span class="about-badge soft">Processing</span>
+                </div>
+              </div>
+              <div class="about-skills-group">
+                <div class="about-skills-label">Concepts</div>
+                <div class="about-badges-wrap">
+                  <span class="about-badge cs">REST APIs</span>
+                  <span class="about-badge cs">JWT</span>
+                  <span class="about-badge cs">OOP</span>
+                  <span class="about-badge cs">Algorithms</span>
+                  <span class="about-badge cs">Modeling</span>
+                </div>
+              </div>
+              <div class="about-skills-group">
+                <div class="about-skills-label">Strengths</div>
+                <div class="about-badges-wrap">
+                  <span class="about-badge soft">Rigorous</span>
+                  <span class="about-badge soft">Autonomous</span>
+                  <span class="about-badge soft">Curious</span>
+                  <span class="about-badge soft">Analytical mindset</span>
+                  <span class="about-badge soft">Fast learner</span>
                 </div>
               </div>
             </div>
@@ -875,67 +883,67 @@
 
                 <div class="about-project-card">
                   <div class="about-project-header">
-                    <div class="about-project-icon">🛒</div>
+                    <div class="about-project-icon">🏥</div>
                     <div>
-                      <div class="about-project-title">Full-Stack Video Game E-Commerce</div>
+                      <div class="about-project-title">Hospital Management System</div>
                       <div class="about-project-tags">
-                        <span class="about-ptag">Web</span><span class="about-ptag">Full-Stack</span>
+                        <span class="about-ptag">MySQL</span><span class="about-ptag">Python</span><span class="about-ptag">Docker</span>
                       </div>
                     </div>
                   </div>
-                  <p class="about-project-desc">Developed a full-stack web application to sell video games. Implemented both front-end and back-end features for browsing products and purchasing games.</p>
+                  <p class="about-project-desc">Designed a relational database to manage patients, visits, and hospitalizations, with SQL trigger-based automation and a Python interface connected to MySQL.</p>
                 </div>
 
                 <div class="about-project-card">
                   <div class="about-project-header">
-                    <div class="about-project-icon">🐑</div>
+                    <div class="about-project-icon">🚆</div>
                     <div>
-                      <div class="about-project-title">AI Sheep Battle Game</div>
-                      <div class="about-project-tags">
-                        <span class="about-ptag">Python</span><span class="about-ptag">AI</span><span class="about-ptag">OOP</span>
-                      </div>
-                    </div>
-                  </div>
-                  <p class="about-project-desc">Team-based battle simulation with autonomous sheep agents. Applied object-oriented programming principles.</p>
-                </div>
-
-                <div class="about-project-card">
-                  <div class="about-project-header">
-                    <div class="about-project-icon">🚇</div>
-                    <div>
-                      <div class="about-project-title">Smart Vehicle Transport Simulation</div>
+                      <div class="about-project-title">Railway Network Simulation</div>
                       <div class="about-project-tags">
                         <span class="about-ptag">Java</span><span class="about-ptag">Processing</span><span class="about-ptag">Simulation</span>
                       </div>
                     </div>
                   </div>
-                  <p class="about-project-desc">Simulated an automated vehicle elevator and underground metro transport system.</p>
+                  <p class="about-project-desc">Developed a visual railway traffic simulation with track management, signaling, traffic conflict handling, and real-time monitoring.</p>
                 </div>
 
                 <div class="about-project-card">
                   <div class="about-project-header">
-                    <div class="about-project-icon">🧠</div>
+                    <div class="about-project-icon">🚋</div>
                     <div>
-                      <div class="about-project-title">Algorithmic Problem Solving</div>
+                      <div class="about-project-title">Formal Modeling of a Tram Network</div>
                       <div class="about-project-tags">
-                        <span class="about-ptag">Java</span><span class="about-ptag">Algorithms</span>
+                        <span class="about-ptag">Rodin</span><span class="about-ptag">Event-B</span><span class="about-ptag">Formal Methods</span>
                       </div>
                     </div>
                   </div>
-                  <p class="about-project-desc">Implemented divide &amp; conquer, greedy, generate-and-test, and dynamic programming algorithms.</p>
+                  <p class="about-project-desc">Specified a transport system using safety invariants, successive refinements, and formal verification of critical properties.</p>
+                </div>
+
+                <div class="about-project-card">
+                  <div class="about-project-header">
+                    <div class="about-project-icon">🛒</div>
+                    <div>
+                      <div class="about-project-title">GameStore — Video Game E-commerce Platform</div>
+                      <div class="about-project-tags">
+                        <span class="about-ptag">FastAPI</span><span class="about-ptag">SQLite</span><span class="about-ptag">JWT</span><span class="about-ptag">Full-Stack</span>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="about-project-desc">Developed a full-stack web application with JWT authentication, product catalog, cart, orders, admin interface, and REST API.</p>
                 </div>
 
                 <div class="about-project-card about-project-featured">
                   <div class="about-project-header">
                     <div class="about-project-icon">🌐</div>
                     <div>
-                      <div class="about-project-title">LifeOS — This Website</div>
+                      <div class="about-project-title">LifeOS — Personal Productivity Dashboard</div>
                       <div class="about-project-tags">
-                        <span class="about-ptag">HTML</span><span class="about-ptag">CSS</span><span class="about-ptag">JavaScript</span><span class="about-ptag">Personal Project</span>
+                        <span class="about-ptag">HTML</span><span class="about-ptag">CSS</span><span class="about-ptag">JavaScript</span><span class="about-ptag">Chart.js</span>
                       </div>
                     </div>
                   </div>
-                  <p class="about-project-desc">Personal productivity dashboard with tasks, habits, finances, language learning, Pomodoro timer, statistics, and more — built entirely in vanilla JS with localStorage persistence.</p>
+                  <p class="about-project-desc">Built a single-page productivity web application featuring tasks, calendar, habits, finances, notes, and statistics, with local storage and a responsive interface.</p>
                 </div>
 
               </div>
@@ -1420,113 +1428,6 @@
   </div>
 </div>
 
-<!-- Subject Task Modal -->
-<div class="modal hidden" id="subjectTaskModal">
-  <div class="modal-header">
-    <h2 id="subjectTaskModalTitle">Nouvelle tâche</h2>
-    <button class="modal-close" onclick="Modal.close('subjectTaskModal')">×</button>
-  </div>
-  <div class="modal-body">
-    <input type="hidden" id="subjectTaskId">
-    <input type="hidden" id="subjectTaskSubjectId">
-    <div class="form-row">
-      <label>Titre *</label>
-      <input type="text" id="subjectTaskTitle" class="form-input" placeholder="Ex: Faire le TP 3">
-    </div>
-    <div class="form-row two-col">
-      <div>
-        <label>Catégorie</label>
-        <select id="subjectTaskCategory" class="form-input">
-          <option value="Cours">Cours</option>
-          <option value="TP">TP</option>
-          <option value="Exercice">Exercice</option>
-          <option value="Vidéo YouTube">Vidéo YouTube</option>
-          <option value="Révision">Révision</option>
-          <option value="Devoir">Devoir</option>
-          <option value="Projet">Projet</option>
-          <option value="Lecture">Lecture</option>
-        </select>
-      </div>
-      <div>
-        <label>Priorité</label>
-        <select id="subjectTaskPriority" class="form-input">
-          <option value="low">Basse</option>
-          <option value="medium" selected>Moyenne</option>
-          <option value="high">Haute</option>
-        </select>
-      </div>
-    </div>
-    <div class="form-row">
-      <label>Description (optionnel)</label>
-      <textarea id="subjectTaskDescription" class="form-textarea" rows="2" placeholder="Détails de la tâche..."></textarea>
-    </div>
-    <div class="form-row two-col">
-      <div>
-        <label>Date limite (optionnel)</label>
-        <input type="date" id="subjectTaskDeadline" class="form-input">
-      </div>
-      <div>
-        <label>Statut</label>
-        <select id="subjectTaskStatus" class="form-input">
-          <option value="todo">À faire</option>
-          <option value="progress">En cours</option>
-          <option value="done">Terminé</option>
-        </select>
-      </div>
-    </div>
-    <div class="form-row">
-      <label>Lien (optionnel)</label>
-      <input type="url" id="subjectTaskLink" class="form-input" placeholder="https://...">
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-secondary" onclick="Modal.close('subjectTaskModal')">Annuler</button>
-    <button class="btn btn-danger hidden" id="subjectTaskDeleteBtn">Supprimer</button>
-    <button class="btn btn-primary" id="subjectTaskSaveBtn">Enregistrer</button>
-  </div>
-</div>
-
-<!-- Subject Resource Modal -->
-<div class="modal hidden" id="subjectResourceModal">
-  <div class="modal-header">
-    <h2 id="subjectResourceModalTitle">Nouvelle ressource</h2>
-    <button class="modal-close" onclick="Modal.close('subjectResourceModal')">×</button>
-  </div>
-  <div class="modal-body">
-    <input type="hidden" id="subjectResourceId">
-    <input type="hidden" id="subjectResourceSubjectId">
-    <div class="form-row">
-      <label>Titre *</label>
-      <input type="text" id="subjectResourceTitle" class="form-input" placeholder="Ex: Cours magistral - Tri par insertion">
-    </div>
-    <div class="form-row">
-      <label>Type</label>
-      <select id="subjectResourceType" class="form-input">
-        <option value="Cours">Cours</option>
-        <option value="PDF">PDF</option>
-        <option value="Vidéo YouTube">Vidéo YouTube</option>
-        <option value="Note">Note</option>
-        <option value="Document">Document</option>
-        <option value="Exercice">Exercice</option>
-        <option value="Chapitre">Chapitre</option>
-      </select>
-    </div>
-    <div class="form-row">
-      <label>Lien (optionnel)</label>
-      <input type="url" id="subjectResourceLink" class="form-input" placeholder="https://...">
-    </div>
-    <div class="form-row">
-      <label>Description (optionnel)</label>
-      <textarea id="subjectResourceDescription" class="form-textarea" rows="2" placeholder="Notes sur cette ressource..."></textarea>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-secondary" onclick="Modal.close('subjectResourceModal')">Annuler</button>
-    <button class="btn btn-danger hidden" id="subjectResourceDeleteBtn">Supprimer</button>
-    <button class="btn btn-primary" id="subjectResourceSaveBtn">Enregistrer</button>
-  </div>
-</div>
-
 <!-- Quick Add Modal -->
 <div class="modal modal-sm hidden" id="quickAddModal">
   <div class="modal-header">
@@ -1548,9 +1449,6 @@
 
 <!-- ════════════════════ FOCUS OVERLAY ════════════════════ -->
 <div class="focus-overlay" id="focusOverlay">
-  <!-- Background image layer -->
-  <div class="focus-bg-wrap" id="focusBgWrap"></div>
-
   <canvas id="focusCanvas"></canvas>
 
   <!-- Breathing rings -->
